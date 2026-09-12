@@ -6,8 +6,7 @@
     "dev:server": "npm --prefix server run dev",
     "dev:client": "npm --prefix client run dev",
     "dev:ai": "powershell -Command \"& ai_service/.venv/Scripts/python.exe -m uvicorn app.main:app --app-dir ai_service --host 0.0.0.0 --port 8000 --reload\"",
-    "build": "npm --prefix server run build && npm --prefix client run build",
-    "create-samples": "powershell -Command \"& ai_service/.venv/Scripts/python.exe ai_service/create_samples.py\""
+    "build": "npm --prefix server run build && npm --prefix client run build"
   },
   "keywords": [
     "deep-learning",
@@ -17,6 +16,6 @@
     "fastapi",
     "explainable-ai"
   ],
-  "author": "Antigravity AI & Final Year Project Team",
+  "author": "Nazma Team",
   "license": "MIT"
 }

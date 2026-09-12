@@ -3,6 +3,13 @@ title ColoAI-Polyp Diagnostic Platform - One-Click Launcher
 echo =====================================================================
 echo    COLOAI-POLYP DIAGNOSTIC PLATFORM (MERN + Deep Learning + SHAP)
 echo =====================================================================
+
+if not exist server\.env (
+    echo Setting up test environment configuration...
+    copy /Y .env.test .env > nul
+    copy /Y .env.test server\.env > nul
+)
+
 echo [1/3] Starting Python FastAPI AI Microservice on port 8000...
 start "ColoAI AI Microservice (Port 8000)" cmd /k "ai_service\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir ai_service --host 0.0.0.0 --port 8000"
 
@@ -19,7 +26,7 @@ echo Opening browser at http://localhost:5173/ ...
 start http://localhost:5173/
 
 echo =====================================================================
-echo SYSTEM READY FOR CLIENT DEMONSTRATION!
+echo SYSTEM READY FOR PRESENTATION & DEMONSTRATION!
 echo Login credentials:
 echo   - Admin: admin@coloaipoly.org (Password123!)
 echo   - Researcher: researcher@coloaipoly.org (Password123!)
