@@ -130,10 +130,10 @@ export const seedDatabase = async (): Promise<void> => {
     let activeModel = await ModelRegistry.findOne({ version: 'v1.0.0-prod' });
     if (!activeModel) {
       activeModel = await ModelRegistry.create({
-        name: 'ConvNeXt V2 + SHAP + XGBoost Production Pipeline',
+        name: 'Deep Hybrid Architecture + SHAP Production Pipeline',
         version: 'v1.0.0-prod',
-        backbone: 'ConvNeXt V2 (Tiny - 768d feature embeddings)',
-        classifier: 'XGBoost Multi-Class Gradient Boosted Trees',
+        backbone: 'Deep Neural Backbone (768d feature embeddings)',
+        classifier: 'Multi-Class Gradient Boosted Classifier',
         datasetVersion: 'ColoPolyp-Benchmark-DB-v1.0',
         metrics: {
           accuracy: 0.946,
@@ -154,14 +154,14 @@ export const seedDatabase = async (): Promise<void> => {
           },
         },
         status: 'Production',
-        modelPath: 'models/convnextv2_xgboost_v1.bin',
+        modelPath: 'models/deep_classifier_v1.bin',
       });
 
       await ModelRegistry.create({
-        name: 'ConvNeXt V2 (Base) Experimental High-Res',
+        name: 'Deep Neural Network (High-Res) Experimental',
         version: 'v1.1.0-exp',
-        backbone: 'ConvNeXt V2 (Base - 1024d feature embeddings)',
-        classifier: 'XGBoost with SHAP-guided Top-128 features',
+        backbone: 'Deep Neural Backbone (1024d feature embeddings)',
+        classifier: 'Gradient Boosted Trees with SHAP-guided Top-128 features',
         datasetVersion: 'ColoPolyp-Benchmark-DB-v1.0',
         metrics: {
           accuracy: 0.954,
@@ -173,7 +173,7 @@ export const seedDatabase = async (): Promise<void> => {
           specificity: 0.946,
         },
         status: 'Validation',
-        modelPath: 'models/convnextv2_base_xgboost_exp.bin',
+        modelPath: 'models/deep_classifier_v2_exp.bin',
       });
     }
 
@@ -242,34 +242,34 @@ export const seedDatabase = async (): Promise<void> => {
 
       const exp1 = await Explanation.create({
         predictionId: pred1._id,
-        method: 'SHAP (TreeExplainer) + GradCAM Attention Heatmap',
+        method: 'SHAP (TreeExplainer) + Attention Heatmap',
         featureContributions: [
           {
-            featureId: 'f_convnext_127',
+            featureId: 'f_feature_127',
             name: 'Vascular Pit Pattern Intensity (Kudo Type III/IV)',
             contribution: 0.312,
             description: 'High microvascular network density detected in mucosal surface',
           },
           {
-            featureId: 'f_convnext_842',
+            featureId: 'f_feature_842',
             name: 'Glandular Lumen Architecture Irregularity',
             contribution: 0.245,
             description: 'Tubular and villous architectural distortion characteristic of dysplasia',
           },
           {
-            featureId: 'f_convnext_421',
+            featureId: 'f_feature_421',
             name: 'Marginal Demarcation & Elevation',
             contribution: 0.184,
             description: 'Sharp polyp border elevation contrasting surrounding normal epithelium',
           },
           {
-            featureId: 'f_convnext_093',
+            featureId: 'f_feature_093',
             name: 'Surface Mucus Reflectance & Capping',
             contribution: -0.052,
             description: 'Absence of thick adherent mucous cap',
           },
         ],
-        summaryNote: 'Inference completed in 820ms using ConvNeXt V2 (Tiny) and XGBoost.',
+        summaryNote: 'Inference completed in 820ms using Deep Neural Backbone and Gradient Boosted Classifier.',
       });
 
       pred1.explanationId = exp1._id as any;
@@ -333,16 +333,16 @@ export const seedDatabase = async (): Promise<void> => {
 
       const exp2 = await Explanation.create({
         predictionId: pred2._id,
-        method: 'SHAP (TreeExplainer) + GradCAM Attention Heatmap',
+        method: 'SHAP (TreeExplainer) + Attention Heatmap',
         featureContributions: [
           {
-            featureId: 'f_convnext_093',
+            featureId: 'f_feature_093',
             name: 'Surface Mucus Reflectance & Capping',
             contribution: 0.284,
             description: 'Glistening regular surface reflectance without irregular vascular loops',
           },
           {
-            featureId: 'f_convnext_421',
+            featureId: 'f_feature_421',
             name: 'Marginal Demarcation & Elevation',
             contribution: -0.152,
             description: 'Flat, sessile mucosal contour with gentle slope into surrounding mucosa',
@@ -383,16 +383,16 @@ export const seedDatabase = async (): Promise<void> => {
 
       const exp3 = await Explanation.create({
         predictionId: pred3._id,
-        method: 'SHAP (TreeExplainer) + GradCAM Attention Heatmap',
+        method: 'SHAP (TreeExplainer) + Attention Heatmap',
         featureContributions: [
           {
-            featureId: 'f_convnext_093',
+            featureId: 'f_feature_093',
             name: 'Surface Mucus Reflectance & Capping',
             contribution: 0.342,
             description: 'Prominent adherent mucous cap and cloud-like surface texture',
           },
           {
-            featureId: 'f_convnext_421',
+            featureId: 'f_feature_421',
             name: 'Marginal Demarcation & Elevation',
             contribution: 0.215,
             description: 'Indistinct irregular borders typical of sessile serrated lesions (SSL)',
@@ -410,7 +410,7 @@ export const seedDatabase = async (): Promise<void> => {
       await AuditLog.create({
         userName: 'Dr. Sarah Mitchell, MD',
         action: 'SYSTEM_CONFIG_UPDATE',
-        resource: 'FastAPI AI Microservice Cluster',
+        resource: 'AI Microservice Cluster',
         metadata: { version: '1.2.0', initializedRoles: 3, initializedModels: 2 },
         ip: '192.168.1.10',
         status: 'SUCCESS',
@@ -419,8 +419,8 @@ export const seedDatabase = async (): Promise<void> => {
         userId: adminUser?._id,
         userName: adminUser?.name || 'Dr. Sarah Mitchell, MD',
         action: 'MODEL_ACTIVATE_PRODUCTION',
-        resource: 'ConvNeXt V2 (Tiny) v1.0.0-prod',
-        metadata: { modelVersion: 'v1.0.0-prod', pipeline: 'ConvNeXt V2 + XGBoost' },
+        resource: 'Deep Vision Backbone v1.0.0-prod',
+        metadata: { modelVersion: 'v1.0.0-prod', pipeline: 'Deep Hybrid Architecture' },
         ip: '192.168.1.10',
         status: 'SUCCESS',
       });
@@ -438,35 +438,19 @@ export const seedDatabase = async (): Promise<void> => {
         userName: clinicianUser?.name || 'Dr. Elena Rostova, MD',
         action: 'CLINICAL_REVIEW_SUBMITTED',
         resource: 'Polyp Triage #CP-2026-1042',
-        metadata: { analysisId: 'CP-2026-1042', reviewStatus: 'REVIEWED' },
-        ip: '192.168.1.22',
-        status: 'SUCCESS',
-      });
-      await AuditLog.create({
-        userName: 'Dr. Marcus Vance, MD',
-        action: 'HISTOLOGY_CORRELATION',
-        resource: 'Dataset ColoPolyp-Consortium-v1.0',
-        metadata: { lesionType: 'Tubular Adenoma', kudoPattern: 'Type III' },
-        ip: '192.168.1.34',
-        status: 'SUCCESS',
-      });
-      await AuditLog.create({
-        userName: 'Dr. Priya Sharma, MBBS',
-        action: 'DATASET_COHORT_SYNC',
-        resource: 'Kvasir-SEG Colonoscopy Cohort v2.1.0',
-        metadata: { verifiedImages: 2800 },
-        ip: '192.168.1.48',
+        metadata: { status: 'APPROVED', notes: 'Clinically consistent with histopathology' },
+        ip: '192.168.1.20',
         status: 'SUCCESS',
       });
     }
 
-    // 7. Clinical Patient Cases Seeding
+    // 7. Seed Initial Presentation Cases
     const caseCount = await PatientCase.countDocuments();
     if (caseCount === 0) {
-      await PatientCase.create([
+      await PatientCase.insertMany([
         {
           caseId: 'CASE-2026-1042',
-          patientName: 'Robert Johnson',
+          patientName: 'Robert Jenkins',
           patientAge: 62,
           patientGender: 'Male',
           procedureDate: new Date('2025-04-28T10:30:00Z'),
@@ -476,7 +460,7 @@ export const seedDatabase = async (): Promise<void> => {
           polypFindings: 'Adenomatous Polyp (12mm tubular adenoma)',
           riskLevel: 'High',
           status: 'Completed',
-          notes: 'Tubular adenoma identified at sigmoid junction. High confidence ConvNeXt V2 classification (92.4%). Resected completely with snare polypectomy.',
+          notes: 'Tubular adenoma identified at sigmoid junction. High confidence deep learning classification (92.4%). Resected completely with snare polypectomy.',
         },
         {
           caseId: 'CASE-2026-1088',

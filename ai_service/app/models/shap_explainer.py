@@ -4,14 +4,14 @@ class SHAPExplainer:
     def __init__(self, feature_dim: int = 768):
         self.feature_dim = feature_dim
         self.feature_labels = [
-            ("f_convnext_127", "Vascular Pit Pattern Intensity (Kudo Type III/IV)", "High microvascular network density detected in mucosal surface"),
-            ("f_convnext_842", "Glandular Lumen Architecture Irregularity", "Tubular and villous architectural distortion characteristic of dysplasia"),
-            ("f_convnext_421", "Marginal Demarcation & Elevation", "Sharp polyp border elevation contrasting surrounding normal mucosal epithelium"),
-            ("f_convnext_093", "Surface Mucus Reflectance & Capping", "Presence/absence of adherent mucous cap typical of serrated lesions"),
-            ("f_convnext_319", "NBI Chromoendoscopy Color Contrast", "Narrow-band brown-erythematous vessel absorption ratio"),
-            ("f_convnext_654", "Deep Crypt Branching Depth", "Microstructural crypt depth variance extracted from convolutional filters"),
-            ("f_convnext_512", "Submucosal Vessel Caliber Variance", "Superficial capillary loop caliber dilation"),
-            ("f_convnext_208", "Epithelial Texture Granularity", "Surface granularity and nodularity score")
+            ("f_feature_127", "Vascular Pit Pattern Intensity (Kudo Type III/IV)", "High microvascular network density detected in mucosal surface"),
+            ("f_feature_842", "Glandular Lumen Architecture Irregularity", "Tubular and villous architectural distortion characteristic of dysplasia"),
+            ("f_feature_421", "Marginal Demarcation & Elevation", "Sharp polyp border elevation contrasting surrounding normal mucosal epithelium"),
+            ("f_feature_093", "Surface Mucus Reflectance & Capping", "Presence/absence of adherent mucous cap typical of serrated lesions"),
+            ("f_feature_319", "NBI Chromoendoscopy Color Contrast", "Narrow-band brown-erythematous vessel absorption ratio"),
+            ("f_feature_654", "Deep Crypt Branching Depth", "Microstructural crypt depth variance extracted from convolutional filters"),
+            ("f_feature_512", "Submucosal Vessel Caliber Variance", "Superficial capillary loop caliber dilation"),
+            ("f_feature_208", "Epithelial Texture Granularity", "Surface granularity and nodularity score")
         ]
 
     def compute_explanations(self, feature_vector: np.ndarray, predicted_class: str) -> list[dict]:

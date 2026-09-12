@@ -5,7 +5,7 @@ class Settings:
     VERSION: str = "1.0.0"
     HOST: str = os.getenv("HOST", "0.0.0.0")
     PORT: int = int(os.getenv("PORT", "8000"))
-    BACKBONE_NAME: str = "ConvNeXt V2 (Tiny)"
+    BACKBONE_NAME: str = "Deep Neural Backbone (768d)"
     IMAGE_SIZE: int = 224
     CLASSES: list = [
         "Adenomatous Polyp",

@@ -1,7 +1,7 @@
 {
   "name": "coloai-polyp-platform",
   "version": "1.0.0",
-  "description": "Explainable Colorectal Polyp Classification using ConvNeXt V2, SHAP, and XGBoost (MERN + Python FastAPI)",
+  "description": "Explainable Colorectal Polyp Classification Diagnostic Platform using Deep Learning and SHAP (MERN + Python FastAPI)",
   "scripts": {
     "dev:server": "npm --prefix server run dev",
     "dev:client": "npm --prefix client run dev",
@@ -10,9 +10,8 @@
     "create-samples": "powershell -Command \"& ai_service/.venv/Scripts/python.exe ai_service/create_samples.py\""
   },
   "keywords": [
-    "convnext-v2",
+    "deep-learning",
     "shap",
-    "xgboost",
     "colorectal-polyps",
     "mern-stack",
     "fastapi",

@@ -49,6 +49,7 @@ uploads/
 reports/
 temp/
 scratch/
+cloudflared.exe
 *.log
 
 # OS

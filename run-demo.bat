@@ -1,7 +1,7 @@
 @echo off
 title ColoAI-Polyp Diagnostic Platform - One-Click Launcher
 echo =====================================================================
-echo    COLOAI-POLYP DIAGNOSTIC PLATFORM (MERN + ConvNeXt V2 + SHAP)
+echo    COLOAI-POLYP DIAGNOSTIC PLATFORM (MERN + Deep Learning + SHAP)
 echo =====================================================================
 echo [1/3] Starting Python FastAPI AI Microservice on port 8000...
 start "ColoAI AI Microservice (Port 8000)" cmd /k "ai_service\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir ai_service --host 0.0.0.0 --port 8000"

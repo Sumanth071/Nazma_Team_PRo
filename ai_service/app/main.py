@@ -6,7 +6,7 @@ from app.core.config import settings
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
-    description="Dedicated Python AI Microservice for Colorectal Polyp Classification with ConvNeXt V2, XGBoost, and SHAP Explainability."
+    description="Dedicated Python AI Microservice for Colorectal Polyp Classification with Explainable Deep Neural Embeddings and SHAP Analysis."
 )
 
 app.add_middleware(

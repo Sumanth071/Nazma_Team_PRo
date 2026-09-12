@@ -1,5 +1,5 @@
 # ColoAI-Polyp: Explainable Colorectal Polyp Classification System
-### Hybrid Deep Learning & MLOps Architecture: ConvNeXt V2 + SHAP + XGBoost + MERN Stack
+### Hybrid Deep Learning & MLOps Architecture: Deep Neural Backbone + SHAP + MERN Stack
 
 An enterprise medical decision-support system designed to classify colorectal polyps from colonoscopy endoscopic captures into 4 clinical categories, augmented with SHAP-based feature explainability and deep attention heatmaps.
 
@@ -24,7 +24,7 @@ On the login page, you can either click the **1-Click Demo Login** buttons or en
 | Role | User Name | Email | Password | Primary Capabilities |
 | :--- | :--- | :--- | :--- | :--- |
 | **Administrator** | Dr. Sarah Mitchell | `admin@coloaipoly.org` | `Password123!` | Model registry, dataset metadata, user RBAC, audit trail |
-| **AI Researcher** | Prof. David Chen | `researcher@coloaipoly.org` | `Password123!` | Image upload, ConvNeXt + XGBoost inference, SHAP explanations, PDF reports |
+| **AI Researcher** | Prof. David Chen | `researcher@coloaipoly.org` | `Password123!` | Image upload, deep hybrid inference, SHAP explanations, PDF reports |
 | **Clinician** | Dr. Elena Rostova | `clinician@coloaipoly.org` | `Password123!` | Pending reviews queue, clinical observations, validation sign-off |
 
 *(Tip: In the top navigation bar, use the **"Switch Role"** dropdown to switch between Administrator, Researcher, and Clinician instantly during your presentation without logging out).*
@@ -37,22 +37,22 @@ On the login page, you can either click the **1-Click Demo Login** buttons or en
 1. Log in as **Researcher** (click the green Researcher demo button).
 2. Review the **Researcher Dashboard**:
    - Point out **Total Analyses**, **Completed Analyses**, and **Average Confidence** (~93%).
-   - Highlight the **Active Live Model** card (`ConvNeXt V2 + XGBoost v1.0.0-prod`).
+   - Highlight the **Active Live Model** card (`Deep Hybrid Pipeline v1.0.0-prod`).
 3. Click **"Start New Analysis"** (`/analyze`):
    - In the **Sample Gallery** on the right, click **"Adenomatous Polyp Sample"**.
    - Review the image preview and validation badges.
-   - Click **"Execute ConvNeXt V2 + XGBoost Analysis"**.
+   - Click **"Execute Deep AI Analysis"**.
 4. Observe the **Multi-stage Animated Processing Screen**:
    - *Image Upload & Checksum Validation* ✓
    - *Center-Crop & 224x224 Normalization* ✓
-   - *ConvNeXt V2 Deep Feature Vector Extraction (768 Dimensions)* ⟳
+   - *Deep Feature Vector Extraction (768 Dimensions)* ⟳
    - *SHAP Feature Attribution & TreeExplainer* ○
-   - *XGBoost Final Multi-Class Classification* ○
+   - *Final Multi-Class Classification* ○
    - *Heatmap Synthesis* ○
 5. On the **Prediction Result** screen (`/prediction/:id`):
    - **Predicted Class**: Adenomatous Polyp (High confidence: ~92%).
    - **Class Probability Breakdown**: Bar visualizer showing softprob distribution.
-   - **Visual Attention Heatmap**: Toggle between Original Image and ConvNeXt Saliency Overlay.
+   - **Visual Attention Heatmap**: Toggle between Original Image and Deep Saliency Overlay.
    - **SHAP Feature Attribution Waterfall**: Show how specific morphological features (Vascular Pit Pattern Intensity, Glandular Lumen Irregularity) contributed positively to the classification.
 6. Click **"Download PDF Report"** to show the generated PDF report with the hospital banner, image, probabilities, and clinical disclaimers.
 
@@ -115,18 +115,18 @@ On the login page, you can either click the **1-Click Demo Login** buttons or en
                                      ┌──────────────┼──────────────┐
                                      │              │              │
                                      ▼              ▼              ▼
-                                ConvNeXt V2       SHAP          XGBoost
-                                (Feature Vec) (TreeExplainer) (Classifier)
+                               Deep Backbone       SHAP          Ensemble
+                               (Feature Vec) (TreeExplainer) (Classifier)
 ```
 
 ---
 
 ## 🎓 Viva / Presentation Defense Talking Points
 
-1. **Why ConvNeXt V2?**
-   - ConvNeXt V2 modernizes pure convolutional networks with 7x7 depthwise separable convolutions, inverted bottlenecks, and Global Response Normalization (GRN), achieving transformer-level feature representations while maintaining endoscopic spatial locality.
-2. **Why XGBoost on top of Deep Features?**
-   - Directly training an end-to-end CNN often overfits on subtle colonoscopy variations. Using ConvNeXt V2 strictly as a feature extractor (768-d embeddings) and training gradient-boosted decision trees (XGBoost) produces superior multi-class margin separation and facilitates exact tree-based Shapley value computation.
+1. **Why Deep Vision Backbone?**
+   - Modernizes convolutional networks with depthwise separable representations, inverted bottlenecks, and Global Response Normalization (GRN), achieving transformer-level feature representations while maintaining endoscopic spatial locality.
+2. **Why Gradient Boosted Ensemble on top of Deep Features?**
+   - Directly training an end-to-end CNN often overfits on subtle colonoscopy variations. Using a deep neural network strictly as a feature extractor (768-d embeddings) and training gradient-boosted decision trees produces superior multi-class margin separation and facilitates exact tree-based Shapley value computation.
 3. **Why SHAP?**
    - Deep learning in gastroenterology is traditionally a black box. TreeExplainer provides mathematically grounded additive feature attribution ($f(x) = \phi_0 + \sum \phi_i$), proving to clinicians why the AI concluded a lesion was adenomatous rather than hyperplastic.
 4. **Is this replacing clinicians?**

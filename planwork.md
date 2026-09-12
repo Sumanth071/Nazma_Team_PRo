@@ -1,4 +1,4 @@
-# Explainable Colorectal Polyp Classification Using ConvNeXt V2, SHAP and XGBoost
+# Explainable Colorectal Polyp Classification Using Deep Learning and SHAP
 ## Master Project Reference & Execution Record (`planwork.md`)
 
 This master reference document tracks all completed features, system architecture, database schemas, and demonstration procedures according to the approved Business Requirements Document (BRD).
@@ -8,9 +8,9 @@ This master reference document tracks all completed features, system architectur
 ## 1. System Status & Verification Overview
 - **Frontend (React + Vite + Tailwind)**: Running on `http://localhost:5173/` (Vite 6.4.3)
 - **Backend API (Node.js + Express + TypeScript)**: Running on `http://localhost:5000/` (Express 4.21.2)
-- **AI Microservice (Python FastAPI + PyTorch/timm + XGBoost + SHAP)**: Running on `http://localhost:8000/` (FastAPI 0.141.1, Uvicorn 0.52.4)
+- **AI Microservice (Python FastAPI + Deep Vision Network + SHAP)**: Running on `http://localhost:8000/` (FastAPI 0.141.1, Uvicorn 0.52.4)
 - **Database & Cloud Storage**: Connected live to **MongoDB Atlas Cloud Database** (`suman.1lwpnwk.mongodb.net/coloai`). All user accounts, models, predictions, reviews, and audit logs are now stored directly in the cloud.
-- **Automated Verification**: End-to-end integration test successfully verified all 5 user workflows against MongoDB Atlas.
+- **Automated Verification**: End-to-end integration test successfully verified all user workflows against MongoDB Atlas.
 
 ---
 
@@ -43,8 +43,8 @@ This master reference document tracks all completed features, system architectur
 
 ### ✅ Module 3: AI Inference Microservice (BRD M07 & Section 34)
 - [x] Dedicated FastAPI microservice on port 8000.
-- [x] **ConvNeXt V2 Feature Extractor**: Extracts deep 768-dimensional visual feature vectors.
-- [x] **XGBoost Classifier**: Multi-class gradient boosted decision trees classifying:
+- [x] **Deep Vision Feature Extractor**: Extracts deep 768-dimensional visual feature vectors.
+- [x] **Multi-Class Ensemble Classifier**: Gradient boosted decision trees classifying:
   1. *Adenomatous Polyp*
   2. *Hyperplastic Polyp*
   3. *Serrated Polyp*
@@ -100,12 +100,12 @@ Follow this step-by-step sequence during project viva/demonstrations:
 2. In the Dashboard, review total analyses, model confidence, and active production model.
 3. Click **"Start New Analysis"**.
 4. In the sample gallery on the right, click **"Adenomatous Polyp Sample"**.
-5. Click **"Execute ConvNeXt V2 + XGBoost Analysis"**.
-6. Show the multi-stage progress animation (Preprocessing -> ConvNeXt V2 -> SHAP -> XGBoost).
+5. Click **"Execute Deep AI Analysis"**.
+6. Show the multi-stage progress animation (Preprocessing -> Feature Extraction -> SHAP -> Classification).
 7. On the **Prediction Result** screen:
    - Point out **Adenomatous Polyp** (91.5% confidence).
    - Point out the **Calibrated Class Probabilities**.
-   - Show the **ConvNeXt Attention Heatmap** overlay.
+   - Show the **Visual Attention Heatmap** overlay.
    - Show the **SHAP Feature Attribution** chart (+0.19 impact for Vascular Pit Pattern).
 8. Click **"Download PDF Report"** to show the generated clinical report.
 

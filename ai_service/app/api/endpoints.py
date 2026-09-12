@@ -19,10 +19,10 @@ def health_check():
 @router.get("/model/info", response_model=ModelInfoResponse)
 def get_model_info():
     return {
-        "name": "ConvNeXt V2 + SHAP + XGBoost Hybrid Classifier",
+        "name": "Explainable Deep Hybrid Classifier",
         "version": settings.MODEL_VERSION,
         "backbone": settings.BACKBONE_NAME,
-        "classifier": "XGBoost Multi-Class",
+        "classifier": "Ensemble Gradient Classifier",
         "classes": settings.CLASSES,
         "feature_dim": settings.FEATURE_DIM,
         "status": "Production",

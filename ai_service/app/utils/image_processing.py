@@ -27,7 +27,7 @@ def generate_attention_heatmap(pil_image: Image.Image, predicted_class: str) -> 
     w, h = pil_image.size
     img_array = np.array(pil_image)
 
-    # Synthetic localized Gaussian attention center simulating ConvNeXt V2 last conv block activations
+    # Synthetic localized Gaussian attention center simulating deep convolutional block activations
     # In clinical colonoscopy, polyps typically occupy central or slightly offset quadrants
     y_coords, x_coords = np.ogrid[:h, :w]
     cx, cy = w * 0.52, h * 0.48

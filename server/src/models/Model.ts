@@ -38,12 +38,12 @@ const ModelSchema = new Schema<IModel>(
     backbone: {
       type: String,
       required: true,
-      default: 'ConvNeXt V2 (Tiny/Base)',
+      default: 'Deep Neural Backbone (768d)',
     },
     classifier: {
       type: String,
       required: true,
-      default: 'XGBoost Multi-Class',
+      default: 'Ensemble Gradient Classifier',
     },
     datasetVersion: {
       type: String,
@@ -70,7 +70,7 @@ const ModelSchema = new Schema<IModel>(
     },
     modelPath: {
       type: String,
-      default: 'models/convnextv2_xgboost_v1.bin',
+      default: 'models/deep_classifier_v1.bin',
     },
   },
   { timestamps: true }

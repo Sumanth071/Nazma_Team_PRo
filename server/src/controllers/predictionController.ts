@@ -35,7 +35,7 @@ export const createPrediction = async (req: AuthRequest, res: Response): Promise
       activeModel = await ModelRegistry.findOne().sort({ createdAt: -1 });
     }
 
-    // 3. Call AI Service (ConvNeXt V2 + SHAP + XGBoost)
+    // 3. Call AI Service (Deep Learning + SHAP)
     const aiClient = AIServiceClient.getInstance();
     const aiResult = await aiClient.predict(file.path, activeModel?.version);
 
