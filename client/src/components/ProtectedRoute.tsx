@@ -27,7 +27,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   if (!user) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    const targetLogin = location.pathname.startsWith('/admin') ? '/admin/login' : '/login';
+    return <Navigate to={targetLogin} state={{ from: location }} replace />;
   }
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {

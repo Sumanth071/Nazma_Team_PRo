@@ -32,3 +32,95 @@
     background: #334155;
   }
 }
+
+/* Fast Cinematic Hospital Motion Animations */
+@keyframes hospitalMotionFast1 {
+  0% {
+    transform: scale(1.04) translate(0%, 0%);
+  }
+  50% {
+    transform: scale(1.16) translate(-2.5%, -1.8%);
+  }
+  100% {
+    transform: scale(1.08) translate(1.8%, 1.5%);
+  }
+}
+
+@keyframes hospitalMotionFast2 {
+  0% {
+    transform: scale(1.15) translate(2%, 1.2%);
+  }
+  50% {
+    transform: scale(1.05) translate(-2.2%, 1.8%);
+  }
+  100% {
+    transform: scale(1.18) translate(0.5%, -1.8%);
+  }
+}
+
+@keyframes hospitalMotionFast3 {
+  0% {
+    transform: scale(1.08) translate(-2%, 1.8%);
+  }
+  50% {
+    transform: scale(1.20) translate(2.2%, -1.2%);
+  }
+  100% {
+    transform: scale(1.04) translate(0%, 0%);
+  }
+}
+
+@keyframes laserScanline {
+  0% {
+    top: -8%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.9;
+  }
+  100% {
+    top: 108%;
+    opacity: 0;
+  }
+}
+
+@keyframes ecgPulse {
+  0% {
+    stroke-dashoffset: 200;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes radarSweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-hospital-fast-1 {
+  animation: hospitalMotionFast1 4s ease-in-out infinite alternate;
+}
+
+.animate-hospital-fast-2 {
+  animation: hospitalMotionFast2 3.8s ease-in-out infinite alternate;
+}
+
+.animate-hospital-fast-3 {
+  animation: hospitalMotionFast3 4.2s ease-in-out infinite alternate;
+}
+
+.animate-laser-scan {
+  animation: laserScanline 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-radar-sweep {
+  animation: radarSweep 4s linear infinite;
+}

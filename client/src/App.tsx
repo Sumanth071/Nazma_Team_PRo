@@ -7,6 +7,7 @@ import { DashboardLayout } from './layouts/DashboardLayout';
 
 // Auth Pages
 import { Login } from './pages/auth/Login';
+import { AdminLogin } from './pages/auth/AdminLogin';
 import { Register } from './pages/auth/Register';
 import { ForgotPassword } from './pages/auth/ForgotPassword';
 
@@ -42,6 +43,7 @@ export const App: React.FC = () => {
           <Routes>
           {/* Public Authentication Routes */}
           <Route path="/login" element={<Login />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
 
