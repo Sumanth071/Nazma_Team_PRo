@@ -1,0 +1,23 @@
+{
+  "name": "coloai-polyp-platform",
+  "version": "1.0.0",
+  "description": "Explainable Colorectal Polyp Classification using ConvNeXt V2, SHAP, and XGBoost (MERN + Python FastAPI)",
+  "scripts": {
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "dev:ai": "powershell -Command \"& ai_service/.venv/Scripts/python.exe -m uvicorn app.main:app --app-dir ai_service --host 0.0.0.0 --port 8000 --reload\"",
+    "build": "npm --prefix server run build && npm --prefix client run build",
+    "create-samples": "powershell -Command \"& ai_service/.venv/Scripts/python.exe ai_service/create_samples.py\""
+  },
+  "keywords": [
+    "convnext-v2",
+    "shap",
+    "xgboost",
+    "colorectal-polyps",
+    "mern-stack",
+    "fastapi",
+    "explainable-ai"
+  ],
+  "author": "Antigravity AI & Final Year Project Team",
+  "license": "MIT"
+}
