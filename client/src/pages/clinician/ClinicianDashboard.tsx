@@ -140,7 +140,14 @@ export const ClinicianDashboard: React.FC = () => {
                         <tr key={pred._id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
                           <td className="py-3 pl-1">
                             <div className="w-10 h-10 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 flex items-center justify-center">
-                              <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
+                              <img
+                                src={img}
+                                alt="Thumbnail"
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  e.currentTarget.src = '/sample_images/colon_001.jpg';
+                                }}
+                              />
                             </div>
                           </td>
                           <td className="py-3 font-mono font-bold text-slate-900 dark:text-white">

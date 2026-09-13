@@ -159,10 +159,10 @@ export const PredictionDetails: React.FC = () => {
           </div>
 
           {/* Bottom Buttons */}
-          <div className="pt-2 flex flex-wrap items-center gap-3">
+          <div className="pt-3 flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3">
             <Link
               to={`/explanation/${prediction._id}`}
-              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs flex items-center gap-2 transition-colors"
+              className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs flex items-center justify-center gap-2 transition-colors min-h-[44px]"
             >
               <Eye className="w-4 h-4" />
               <span>View Explanation</span>
@@ -174,7 +174,7 @@ export const PredictionDetails: React.FC = () => {
                 const token = localStorage.getItem('coloai_token') || '';
                 window.open(`/api/reports/${prediction.reportId || prediction._id}/download?token=${token}`, '_blank');
               }}
-              className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-2 transition-colors"
+              className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer min-h-[44px]"
             >
               <Download className="w-4 h-4 text-slate-500 dark:text-slate-400" />
               <span>Download Report</span>

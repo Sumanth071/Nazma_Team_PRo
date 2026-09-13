@@ -143,6 +143,9 @@ export const PredictionHistory: React.FC = () => {
                             src={img}
                             alt="Thumbnail"
                             className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.currentTarget.src = '/sample_images/colon_001.jpg';
+                            }}
                           />
                         </div>
                       </td>
