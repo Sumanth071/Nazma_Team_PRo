@@ -17,6 +17,7 @@ import {
 import { UserRole } from '../../types';
 import { useTheme } from '../../context/ThemeContext';
 import { InstallPWAButton } from '../../components/InstallPWAButton';
+import { BrandLogo } from '../../components/BrandLogo';
 
 interface HospitalScene {
   id: string;
@@ -174,19 +175,7 @@ export const Login: React.FC = () => {
 
           {/* Top Header: Logo & Live Status Telemetry */}
           <div className="relative z-20 flex items-center justify-between gap-2 sm:gap-3">
-            <div className="flex items-center gap-2.5 sm:gap-3">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black text-sm sm:text-base shadow-lg shadow-blue-500/40 border border-blue-400/30 shrink-0">
-                <CircleDot className="w-4 h-4 sm:w-5 sm:h-5" />
-              </div>
-              <div>
-                <div className="font-extrabold text-lg sm:text-xl tracking-tight text-white leading-tight">
-                  Colo<span className="text-blue-400">AI</span>
-                </div>
-                <div className="text-[10px] sm:text-[11px] text-blue-200/90 font-medium">
-                  Clinical Staff Portal
-                </div>
-              </div>
-            </div>
+            <BrandLogo size="md" subtitle="Precision Endoscopy AI" />
 
             {/* Live Network Pulse Indicator */}
             <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-cyan-500/40 text-[10px] sm:text-[11px] font-semibold text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.25)]">

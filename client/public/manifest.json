@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "ColoAI Diagnostic Platform",
-  "short_name": "ColoAI",
-  "description": "Explainable Colorectal Polyp Classification and Clinical Decision Support System",
+  "name": "PolypAI Precision Diagnostic Platform",
+  "short_name": "PolypAI",
+  "description": "Precision Endoscopy AI Platform for Colorectal Polyp Classification and Decision Support",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

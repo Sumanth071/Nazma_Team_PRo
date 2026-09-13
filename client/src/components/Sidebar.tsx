@@ -21,6 +21,7 @@ import {
   Activity,
   X,
 } from 'lucide-react';
+import { BrandLogo } from './BrandLogo';
 
 interface SidebarProps {
   mobileOpen?: boolean;
@@ -64,19 +65,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, onClose })
         <div className="space-y-6 overflow-y-auto">
           {/* Brand Header */}
           <div className="flex items-center justify-between px-1 py-1">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center font-black text-sm shadow-sm text-white">
-                <CircleDot className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="font-extrabold text-base tracking-tight leading-none text-white">
-                  Colo<span className="text-blue-400">AI</span>
-                </div>
-                <div className="text-[10px] text-slate-400 font-medium leading-none mt-1">
-                  Colonoscopy Decision Support
-                </div>
-              </div>
-            </div>
+            <BrandLogo size="sm" subtitle="Precision Endoscopy AI" />
 
             {/* Close button on mobile */}
             <button

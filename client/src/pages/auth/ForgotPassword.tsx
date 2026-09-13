@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../api/client';
-import { Mail, ArrowLeft, Sun, Moon, CircleDot } from 'lucide-react';
+import { Mail, ArrowLeft, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
+import { BrandLogo } from '../../components/BrandLogo';
 
 export const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -42,16 +43,9 @@ export const ForgotPassword: React.FC = () => {
       </div>
 
       <div className="w-full max-w-md space-y-5 sm:space-y-6 relative z-10">
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-2 mb-1">
-            <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-blue-500/30">
-              <CircleDot className="w-4 h-4" />
-            </div>
-            <span className="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">
-              Colo<span className="text-blue-500">AI</span>
-            </span>
-          </div>
-          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Reset Password</h2>
+        <div className="text-center space-y-2 flex flex-col items-center">
+          <BrandLogo size="md" subtitle="" textClassName="text-slate-900 dark:text-white" />
+          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white mt-2">Reset Password</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400">Enter your email to receive recovery instructions</p>
         </div>
 

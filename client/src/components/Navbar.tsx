@@ -48,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileSidebar }) => {
             Clinical Decision Support System • AI Diagnostic Platform
           </span>
           <span className="sm:hidden text-xs font-bold text-slate-800 dark:text-white">
-            Colo<span className="text-blue-500">AI</span>
+            Polyp<span className="text-emerald-500">AI</span>
           </span>
         </div>
       </div>

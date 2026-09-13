@@ -92,7 +92,7 @@ export const AdminLogin: React.FC = () => {
               </div>
               <div>
                 <div className="font-extrabold text-lg sm:text-xl tracking-tight text-white leading-tight">
-                  Colo<span className="text-rose-400">AI</span> Admin
+                  Polyp<span className="text-rose-400">AI</span> Admin
                 </div>
                 <div className="text-[10px] sm:text-[11px] text-rose-300/80 font-mono tracking-wider uppercase">
                   Governance & Security Terminal

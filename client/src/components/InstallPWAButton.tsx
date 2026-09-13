@@ -20,8 +20,8 @@ export const InstallPWAButton: React.FC<InstallPWAButtonProps> = ({ variant = 'n
         <button
           type="button"
           onClick={promptInstall}
-          title="Install ColoAI Diagnostic App on your device"
-          aria-label="Install ColoAI App"
+          title="Install PolypAI Diagnostic App on your device"
+          aria-label="Install PolypAI App"
           className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 hover:from-emerald-500/30 hover:to-cyan-500/30 border border-emerald-500/40 text-emerald-600 dark:text-emerald-300 font-semibold text-xs transition-all shadow-xs active:scale-95 animate-pulse duration-1000 ${className}`}
         >
           <Smartphone className="w-3.5 h-3.5 text-emerald-500" />
@@ -36,7 +36,7 @@ export const InstallPWAButton: React.FC<InstallPWAButtonProps> = ({ variant = 'n
               <Smartphone className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             </div>
             <div className="min-w-0">
-              <p className="text-xs font-bold text-slate-900 dark:text-white truncate">Install ColoAI Mobile App</p>
+              <p className="text-xs font-bold text-slate-900 dark:text-white truncate">Install PolypAI Mobile App</p>
               <p className="text-[11px] font-medium text-slate-600 dark:text-slate-300 truncate">Launch fullscreen from your home screen</p>
             </div>
           </div>
@@ -69,7 +69,7 @@ export const InstallPWAButton: React.FC<InstallPWAButtonProps> = ({ variant = 'n
               </div>
               <div>
                 <h4 className="text-sm font-bold text-white">Install on iPhone / iPad</h4>
-                <p className="text-xs text-slate-400">Add ColoAI to your Home Screen</p>
+                <p className="text-xs text-slate-400">Add PolypAI to your Home Screen</p>
               </div>
             </div>
 
