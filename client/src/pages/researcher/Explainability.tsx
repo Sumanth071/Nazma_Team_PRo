@@ -87,6 +87,9 @@ export const Explainability: React.FC = () => {
               src={imageUrl}
               alt="Original Colonoscopy"
               className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.src = '/sample_images/colon_001.jpg';
+              }}
             />
           </div>
         </div>
@@ -105,6 +108,9 @@ export const Explainability: React.FC = () => {
               src={heatmapUrl}
               alt="Attention Heatmap"
               className="w-full h-full object-cover filter contrast-125"
+              onError={(e) => {
+                e.currentTarget.src = '/sample_images/colon_001.jpg';
+              }}
             />
             {/* Colorbar on right matching Screen 6 */}
             <div className="absolute right-3 top-3 bottom-3 sm:top-4 sm:bottom-4 w-7 rounded-lg bg-white/90 dark:bg-slate-900/90 backdrop-blur-xs p-1.5 flex flex-col items-center justify-between text-[9px] font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-sm">

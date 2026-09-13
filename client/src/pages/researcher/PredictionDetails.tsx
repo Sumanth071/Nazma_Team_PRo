@@ -79,7 +79,14 @@ export const PredictionDetails: React.FC = () => {
         {/* Left Column: Image, Metadata, Sub-Tabs, Action Buttons */}
         <div className="lg:col-span-6 bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-5 transition-colors">
           <div className="w-full h-56 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 flex items-center justify-center">
-            <img src={imageUrl} alt="Polyp Analysis" className="w-full h-full object-cover" />
+            <img
+              src={imageUrl}
+              alt="Polyp Analysis"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.src = '/sample_images/colon_001.jpg';
+              }}
+            />
           </div>
 
           <div className="divide-y divide-slate-100 dark:divide-slate-800 text-xs text-slate-600 dark:text-slate-400">

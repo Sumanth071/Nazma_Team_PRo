@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
+import fs from 'fs';
 import { config } from './config/config';
 import { errorHandler } from './middleware/errorHandler';
 
@@ -35,7 +36,16 @@ app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 
 // Static file serving for uploads and generated reports
+const sampleImagesDir = path.resolve(process.cwd(), '../client/public/sample_images');
 app.use('/uploads', express.static(config.uploadDir));
+app.use('/uploads', express.static(sampleImagesDir));
+app.use('/uploads', (req, res, next) => {
+  const fallback = path.resolve(sampleImagesDir, 'colon_001.jpg');
+  if (fs.existsSync(fallback)) {
+    return res.sendFile(fallback);
+  }
+  next();
+});
 app.use('/reports', express.static(config.reportsDir));
 
 // Health check

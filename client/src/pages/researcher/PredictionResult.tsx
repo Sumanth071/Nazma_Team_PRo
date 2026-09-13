@@ -109,6 +109,9 @@ export const PredictionResult: React.FC = () => {
               src={imageUrl}
               alt="Analyzed Colonoscopy"
               className="w-full h-full object-contain"
+              onError={(e) => {
+                e.currentTarget.src = '/sample_images/colon_001.jpg';
+              }}
             />
           </div>
 
