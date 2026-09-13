@@ -132,14 +132,26 @@ export const Login: React.FC = () => {
   const currentScene = HOSPITAL_SCENES[currentSceneIndex];
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#070f26] flex items-center justify-center p-3 sm:p-4 md:p-6 lg:p-8 font-sans transition-colors relative">
-      {/* Top Floating Theme Switcher */}
-      <div className="absolute top-3 right-3 sm:top-5 sm:right-5 z-30">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#070f26] flex flex-col items-center justify-center p-3 sm:p-4 md:p-6 lg:p-8 font-sans transition-colors relative">
+      {/* Mobile Top Utility Bar (Cleanly positioned above the card to prevent overlap) */}
+      <div className="w-full max-w-5xl flex justify-end mb-2 sm:mb-3 lg:hidden z-30">
         <button
           type="button"
           onClick={toggleTheme}
           aria-label="Toggle Theme"
-          className="p-2 sm:p-2.5 rounded-xl bg-white dark:bg-[#0d1838] border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 shadow-sm transition-all cursor-pointer"
+          className="p-2 rounded-xl bg-white dark:bg-[#0d1838] border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 shadow-sm transition-all cursor-pointer"
+        >
+          {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
+        </button>
+      </div>
+
+      {/* Desktop Floating Theme Switcher */}
+      <div className="hidden lg:block absolute top-5 right-5 z-30">
+        <button
+          type="button"
+          onClick={toggleTheme}
+          aria-label="Toggle Theme"
+          className="p-2.5 rounded-xl bg-white dark:bg-[#0d1838] border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 shadow-sm transition-all cursor-pointer"
         >
           {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
         </button>
@@ -148,7 +160,7 @@ export const Login: React.FC = () => {
       <div className="w-full max-w-5xl bg-white dark:bg-[#0d1838] rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 grid grid-cols-1 lg:grid-cols-12 min-h-[560px] lg:min-h-[620px] transition-colors">
         
         {/* Left Side: Fast-Animated High-Tech Hospital Viewport (7 cols on lg) */}
-        <div className="lg:col-span-7 relative p-5 sm:p-7 md:p-8 lg:p-10 text-white flex flex-col justify-between overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800/80 min-h-[300px] sm:min-h-[360px] lg:min-h-[620px]">
+        <div className="lg:col-span-7 relative p-4 sm:p-7 md:p-8 lg:p-10 text-white flex flex-col justify-between overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800/80 min-h-[260px] sm:min-h-[340px] lg:min-h-[620px]">
           
           {/* Continuous Fast-Motion Cross-fading Hospital Background Images */}
           {HOSPITAL_SCENES.map((scene, idx) => {
@@ -174,16 +186,16 @@ export const Login: React.FC = () => {
 
 
           {/* Top Header: Logo & Live Status Telemetry */}
-          <div className="relative z-20 flex items-center justify-between gap-2 sm:gap-3">
+          <div className="relative z-20 flex items-center justify-between gap-2">
             <BrandLogo size="md" subtitle="Precision Endoscopy AI" />
 
             {/* Live Network Pulse Indicator */}
-            <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-cyan-500/40 text-[10px] sm:text-[11px] font-semibold text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.25)]">
-              <span className="relative flex h-2 w-2">
+            <div className="inline-flex items-center gap-1.5 px-2 sm:px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-cyan-500/40 text-[10px] sm:text-[11px] font-semibold text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.25)] shrink-0">
+              <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
               </span>
-              <span className="truncate max-w-[150px] sm:max-w-none">{currentScene.badge}</span>
+              <span className="truncate max-w-[120px] xs:max-w-none">{currentScene.badge}</span>
             </div>
           </div>
 

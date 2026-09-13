@@ -17,14 +17,14 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
 }) => {
   const iconDimensions = {
     sm: 'w-7 h-7',
-    md: 'w-9 h-9 sm:w-10 sm:h-10',
-    lg: 'w-11 h-11 sm:w-12 sm:h-12',
-    xl: 'w-14 h-14 sm:w-16 sm:h-16',
+    md: 'w-8 h-8 sm:w-10 sm:h-10',
+    lg: 'w-10 h-10 sm:w-12 sm:h-12',
+    xl: 'w-13 h-13 sm:w-16 sm:h-16',
   };
 
   const titleSizes = {
     sm: 'text-sm',
-    md: 'text-lg sm:text-xl',
+    md: 'text-base sm:text-xl',
     lg: 'text-xl sm:text-2xl',
     xl: 'text-2xl sm:text-3xl',
   };
@@ -37,7 +37,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   };
 
   return (
-    <div className={`flex items-center gap-2.5 sm:gap-3 select-none ${className}`}>
+    <div className={`flex items-center gap-2 sm:gap-3 select-none ${className}`}>
       {/* High-Tech Medical Cross & Neural AI Logo Mark */}
       <div className={`relative ${iconDimensions[size]} shrink-0 shadow-lg shadow-emerald-500/25 transition-transform duration-200 hover:scale-105`}>
         <svg
