@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { UserRole } from '../../types';
 import { useTheme } from '../../context/ThemeContext';
+import { InstallPWAButton } from '../../components/InstallPWAButton';
 
 interface HospitalScene {
   id: string;
@@ -273,6 +274,9 @@ export const Login: React.FC = () => {
               <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Staff Sign In</h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">Access colonoscopy analysis and review workspace</p>
             </div>
+
+            {/* PWA Mobile App Install Banner */}
+            <InstallPWAButton variant="banner" />
 
             {/* Quick Demo Login Box: ONLY the 2 Staff Roles */}
             <div className="p-3 sm:p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 space-y-2.5">

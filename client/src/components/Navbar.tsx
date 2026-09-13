@@ -14,6 +14,7 @@ import {
   Menu,
 } from 'lucide-react';
 import { UserRole } from '../types';
+import { InstallPWAButton } from './InstallPWAButton';
 
 interface NavbarProps {
   onToggleMobileSidebar?: () => void;
@@ -53,6 +54,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileSidebar }) => {
       </div>
 
       <div className="flex items-center gap-1.5 sm:gap-3">
+        {/* PWA Install Button */}
+        <InstallPWAButton variant="navbar" />
+
         {/* Light / Dark Mode Toggle Button */}
         <button
           type="button"
