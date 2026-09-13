@@ -288,7 +288,7 @@ export const NewAnalysis: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left column: Drag & Drop Zone + Recent Uploads */}
-        <div className="lg:col-span-8 space-y-6">
+        <div className="lg:col-span-8 space-y-5 sm:space-y-6">
           <div
             onDragOver={(e) => {
               e.preventDefault();
@@ -296,7 +296,7 @@ export const NewAnalysis: React.FC = () => {
             }}
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
-            className={`rounded-2xl border-2 border-dashed p-8 sm:p-10 text-center flex flex-col items-center justify-center transition-all ${
+            className={`rounded-2xl sm:rounded-3xl border-2 border-dashed p-6 sm:p-10 text-center flex flex-col items-center justify-center transition-all ${
               isDragging
                 ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/20'
                 : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d1838] hover:border-slate-400 dark:hover:border-slate-600'
@@ -311,35 +311,35 @@ export const NewAnalysis: React.FC = () => {
             />
 
             {previewUrl ? (
-              <div className="space-y-4 flex flex-col items-center">
-                <div className="w-36 h-36 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm bg-slate-950 flex items-center justify-center">
+              <div className="space-y-4 flex flex-col items-center w-full max-w-sm">
+                <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm bg-slate-950 flex items-center justify-center">
                   <img src={previewUrl} alt="Upload preview" className="w-full h-full object-cover" />
                 </div>
                 <div className="text-center">
-                  <div className="text-xs font-bold text-slate-900 dark:text-white">{selectedFile?.name}</div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                  <div className="text-xs font-bold text-slate-900 dark:text-white truncate max-w-[260px]">{selectedFile?.name}</div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                     {selectedFile && (selectedFile.size / (1024 * 1024)).toFixed(2)} MB
                   </div>
                 </div>
-                <div className="flex items-center gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3 pt-2 w-full justify-center">
                   <button
                     type="button"
                     onClick={() => handleStartAnalysis()}
-                    className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-all"
+                    className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-500/25 transition-all cursor-pointer min-h-[44px]"
                   >
                     Start AI Analysis
                   </button>
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all"
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all cursor-pointer min-h-[44px]"
                   >
                     Change Image
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="space-y-4 flex flex-col items-center">
+              <div className="space-y-3.5 sm:space-y-4 flex flex-col items-center">
                 <div className="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center border border-blue-100 dark:border-blue-900 shadow-xs">
                   <UploadCloud className="w-7 h-7" />
                 </div>
@@ -352,7 +352,7 @@ export const NewAnalysis: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-all"
+                  className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-500/25 transition-all cursor-pointer min-h-[44px]"
                 >
                   Browse Files
                 </button>
@@ -364,23 +364,26 @@ export const NewAnalysis: React.FC = () => {
           </div>
 
           {/* Recent Uploads Section */}
-          <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs space-y-3 transition-colors">
-            <h3 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-              Recent Uploads
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-3 transition-colors">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                Recent Preloaded Samples
+              </h3>
+              <span className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">Click to Test</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               {RECENT_UPLOADS.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => selectRecent(item)}
-                  className="group cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 p-2 hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-md transition-all flex flex-col items-center bg-slate-50/50 dark:bg-slate-900/50"
+                  className="group cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 p-2.5 hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-md transition-all flex sm:flex-col items-center gap-3 sm:gap-0 bg-slate-50/50 dark:bg-slate-900/50"
                 >
-                  <div className="w-full h-24 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 flex items-center justify-center">
+                  <div className="w-20 h-16 sm:w-full sm:h-24 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 flex items-center justify-center shrink-0">
                     <img src={item.url} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                   </div>
-                  <div className="mt-2 text-center w-full">
+                  <div className="sm:mt-2 text-left sm:text-center w-full min-w-0">
                     <div className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">{item.name}</div>
-                    <div className="text-[10px] text-slate-400 dark:text-slate-500">{item.size}</div>
+                    <div className="text-[10px] text-slate-400 dark:text-slate-500">{item.size} • 1-Click Load</div>
                   </div>
                 </div>
               ))}

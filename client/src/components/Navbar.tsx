@@ -47,12 +47,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileSidebar }) => {
             Clinical Decision Support System • AI Diagnostic Platform
           </span>
           <span className="sm:hidden text-xs font-bold text-slate-800 dark:text-white">
-            Polyp<span className="text-blue-500">AI</span>
+            Colo<span className="text-blue-500">AI</span>
           </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex items-center gap-1.5 sm:gap-3">
         {/* Light / Dark Mode Toggle Button */}
         <button
           type="button"

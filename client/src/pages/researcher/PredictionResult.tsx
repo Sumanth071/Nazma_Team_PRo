@@ -208,38 +208,29 @@ export const PredictionResult: React.FC = () => {
             </div>
           </div>
 
-          {/* Bottom Action Bar matching Screen 5 */}
-          <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center gap-3">
+          {/* Bottom Action Bar */}
+          <div className="pt-5 sm:pt-6 border-t border-slate-100 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-center gap-2.5 sm:gap-3">
             <Link
               to={`/explanation/${prediction._id}`}
-              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs flex items-center gap-2 transition-colors"
+              className="w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 transition-colors min-h-[44px]"
             >
               <Eye className="w-4 h-4" />
-              <span>View Explanation</span>
+              <span>View Visual Explanation</span>
             </Link>
 
             <button
               type="button"
               onClick={handleGenerateReport}
               disabled={reportLoading}
-              className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-2 transition-colors"
+              className="w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer min-h-[44px]"
             >
-              <FileText className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-              <span>{reportLoading ? 'Generating...' : 'Generate Report'}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleGenerateReport}
-              className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-2 transition-colors"
-            >
-              <Download className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-              <span>Download Report</span>
+              <Download className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <span>{reportLoading ? 'Generating Report...' : 'Download Clinical Report'}</span>
             </button>
 
             <Link
               to="/analyze"
-              className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-2 transition-colors sm:ml-auto"
+              className="w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-bold flex items-center justify-center gap-2 transition-colors sm:ml-auto min-h-[44px]"
             >
               <RotateCcw className="w-4 h-4 text-slate-500 dark:text-slate-400" />
               <span>Analyze Another</span>

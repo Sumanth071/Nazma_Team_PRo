@@ -132,18 +132,18 @@ export const Dashboard: React.FC = () => {
               <span className="text-[11px] text-slate-400 dark:text-slate-500">Past 30 days</span>
             </div>
 
-            {/* Custom styled vertical bar chart matching Screen 2 */}
-            <div className="mt-8 pt-6 pb-2 flex items-end justify-around h-56 border-b border-slate-100 dark:border-slate-800 px-4">
+            {/* Custom styled vertical bar chart */}
+            <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 pb-2 flex items-end justify-around h-52 sm:h-56 border-b border-slate-100 dark:border-slate-800 px-2 sm:px-4">
               {distributionData.map((item) => (
-                <div key={item.name} className="flex flex-col items-center gap-2 w-16 group">
-                  <span className="text-xs font-bold text-slate-700 dark:text-slate-300">{item.percentage}%</span>
-                  <div className="w-12 bg-slate-100 dark:bg-slate-800/80 rounded-t-lg h-44 flex items-end p-1">
+                <div key={item.name} className="flex flex-col items-center gap-1.5 sm:gap-2 w-12 sm:w-16 group">
+                  <span className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-300">{item.percentage}%</span>
+                  <div className="w-8 sm:w-12 bg-slate-100 dark:bg-slate-800/80 rounded-t-lg h-36 sm:h-44 flex items-end p-0.5 sm:p-1">
                     <div
                       className={`w-full rounded-t-md transition-all duration-700 ${item.barBg}`}
                       style={{ height: `${item.percentage * 1.8}%` }}
                     />
                   </div>
-                  <span className="text-[11px] font-medium text-slate-600 dark:text-slate-400 truncate max-w-[80px] text-center mt-1">
+                  <span className="text-[9px] sm:text-[11px] font-medium text-slate-600 dark:text-slate-400 truncate max-w-[65px] sm:max-w-[80px] text-center mt-1">
                     {item.name}
                   </span>
                 </div>

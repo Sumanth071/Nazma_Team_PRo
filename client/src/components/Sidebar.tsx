@@ -70,7 +70,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, onClose })
               </div>
               <div>
                 <div className="font-extrabold text-base tracking-tight leading-none text-white">
-                  Polyp<span className="text-blue-400">AI</span>
+                  Colo<span className="text-blue-400">AI</span>
                 </div>
                 <div className="text-[10px] text-slate-400 font-medium leading-none mt-1">
                   Colonoscopy Decision Support

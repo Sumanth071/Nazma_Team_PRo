@@ -161,11 +161,11 @@ export const ClinicalReview: React.FC = () => {
             <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
               Review Status
             </label>
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
               <select
                 value={reviewStatus}
                 onChange={(e) => setReviewStatus(e.target.value)}
-                className="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-500 w-60"
+                className="px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-500 w-full sm:w-60 min-h-[44px]"
               >
                 <option value="Pending">Pending</option>
                 <option value="Approved">Approved</option>
@@ -185,17 +185,17 @@ export const ClinicalReview: React.FC = () => {
               value={reviewNotes}
               onChange={(e) => setReviewNotes(e.target.value)}
               placeholder="Add your clinical review notes..."
-              className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white dark:focus:bg-slate-900"
+              className="w-full p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white dark:focus:bg-slate-900 leading-relaxed"
             />
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div>
               <span className="text-slate-400 dark:text-slate-500 block text-[11px]">Attending Reviewer & Title</span>
               <div className="font-semibold text-slate-800 dark:text-slate-200">
                 {user?.name || 'Dr. Elena Rostova, MD'}
               </div>
-              <div className="text-[10px] text-blue-600 dark:text-blue-400 font-medium">
+              <div className="text-[10px] text-blue-600 dark:text-blue-400 font-medium mt-0.5">
                 {user?.role === 'Admin'
                   ? 'Lead System Administrator'
                   : user?.role === 'Researcher'
@@ -211,25 +211,25 @@ export const ClinicalReview: React.FC = () => {
             </div>
           </div>
 
-          <div className="pt-2 flex flex-wrap items-center gap-3">
+          <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-center gap-2.5 sm:gap-3">
             <button
               type="button"
               disabled={saving}
               onClick={() => handleSaveReview(false)}
-              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs flex items-center gap-2 transition-colors disabled:opacity-50"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer min-h-[44px]"
             >
               <Save className="w-4 h-4" />
-              <span>{saving ? 'Saving...' : 'Save Note'}</span>
+              <span>{saving ? 'Saving...' : 'Save Observations'}</span>
             </button>
 
             <button
               type="button"
               disabled={saving}
               onClick={() => handleSaveReview(true)}
-              className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-2 transition-colors disabled:opacity-50"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer min-h-[44px]"
             >
               <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span>Mark as Reviewed</span>
+              <span>Sign & Approve Diagnosis</span>
             </button>
           </div>
         </div>

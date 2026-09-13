@@ -41,21 +41,21 @@ export const ForgotPassword: React.FC = () => {
         </button>
       </div>
 
-      <div className="w-full max-w-md space-y-6 relative z-10">
+      <div className="w-full max-w-md space-y-5 sm:space-y-6 relative z-10">
         <div className="text-center space-y-2">
           <div className="inline-flex items-center gap-2 mb-1">
-            <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-xs">
+            <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-blue-500/30">
               <CircleDot className="w-4 h-4" />
             </div>
-            <span className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">
-              Polyp<span className="text-blue-500">AI</span>
+            <span className="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">
+              Colo<span className="text-blue-500">AI</span>
             </span>
           </div>
           <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Reset Password</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400">Enter your email to receive recovery instructions</p>
         </div>
 
-        <div className="p-6 rounded-2xl bg-white dark:bg-[#0d1838] border border-slate-200 dark:border-slate-800 shadow-xl transition-colors">
+        <div className="p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#0d1838] border border-slate-200 dark:border-slate-800 shadow-xl transition-colors">
           {status === 'success' ? (
             <div className="space-y-4 text-center">
               <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/80 text-emerald-700 dark:text-emerald-300 text-xs">
@@ -66,7 +66,7 @@ export const ForgotPassword: React.FC = () => {
               </p>
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline py-2"
               >
                 <ArrowLeft className="w-4 h-4" /> Back to Sign In
               </Link>
@@ -81,14 +81,14 @@ export const ForgotPassword: React.FC = () => {
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Registered Email</label>
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3 top-3" />
+                  <Mail className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="user@polypai.org"
-                    className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 transition-colors"
+                    placeholder="user@coloaipoly.org"
+                    className="w-full pl-10 pr-3.5 py-2.5 sm:py-3 rounded-xl bg-slate-50 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 transition-colors min-h-[44px]"
                   />
                 </div>
               </div>
@@ -96,13 +96,13 @@ export const ForgotPassword: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold shadow-md cursor-pointer transition-all"
+                className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-500/25 cursor-pointer transition-all min-h-[44px]"
               >
                 {loading ? 'Sending...' : 'Send Reset Instructions'}
               </button>
 
               <div className="text-center pt-2">
-                <Link to="/login" className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 inline-flex items-center gap-1">
+                <Link to="/login" className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 inline-flex items-center gap-1.5 py-1">
                   <ArrowLeft className="w-3.5 h-3.5" /> Back to Sign In
                 </Link>
               </div>

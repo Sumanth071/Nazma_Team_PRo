@@ -22,8 +22,8 @@ export const DashboardLayout: React.FC = () => {
         <Navbar
           onToggleMobileSidebar={() => setMobileSidebarOpen((prev) => !prev)}
         />
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-[#f8fafc] dark:bg-[#070f26] transition-colors duration-200">
-          <div className="max-w-7xl mx-auto space-y-6">
+        <main className="flex-1 overflow-y-auto p-3.5 sm:p-6 md:p-8 bg-[#f8fafc] dark:bg-[#070f26] transition-colors duration-200">
+          <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
             <Outlet />
           </div>
         </main>

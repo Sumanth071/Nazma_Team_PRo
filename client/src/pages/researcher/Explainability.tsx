@@ -76,13 +76,13 @@ export const Explainability: React.FC = () => {
       </div>
 
       {/* Top Row: Original Image and SHAP Visualization side-by-side */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Original Image Card */}
-        <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs space-y-3 transition-colors">
+        <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-3 transition-colors">
           <h2 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-            Original Image
+            Original Colonoscopy Image
           </h2>
-          <div className="w-full h-72 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 flex items-center justify-center">
+          <div className="w-full h-60 sm:h-72 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 flex items-center justify-center">
             <img
               src={imageUrl}
               alt="Original Colonoscopy"
@@ -92,22 +92,22 @@ export const Explainability: React.FC = () => {
         </div>
 
         {/* SHAP Visualization Card with Colorbar */}
-        <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs space-y-3 transition-colors">
+        <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-3 transition-colors">
           <div className="flex items-center justify-between">
             <h2 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-              Attention Map
+              Visual Attention Map
             </h2>
-            <span className="text-[11px] text-slate-400 dark:text-slate-500">Jet Attention Overlay</span>
+            <span className="text-[10px] sm:text-[11px] text-slate-400 dark:text-slate-500">Jet Attention Overlay</span>
           </div>
 
-          <div className="relative w-full h-72 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 flex items-center justify-center">
+          <div className="relative w-full h-60 sm:h-72 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 flex items-center justify-center">
             <img
               src={heatmapUrl}
               alt="Attention Heatmap"
               className="w-full h-full object-cover filter contrast-125"
             />
             {/* Colorbar on right matching Screen 6 */}
-            <div className="absolute right-3 top-4 bottom-4 w-7 rounded-lg bg-white/90 dark:bg-slate-900/90 backdrop-blur-xs p-1.5 flex flex-col items-center justify-between text-[9px] font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div className="absolute right-3 top-3 bottom-3 sm:top-4 sm:bottom-4 w-7 rounded-lg bg-white/90 dark:bg-slate-900/90 backdrop-blur-xs p-1.5 flex flex-col items-center justify-between text-[9px] font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-sm">
               <span className="text-rose-600 dark:text-rose-400">High</span>
               <div className="w-2.5 flex-1 my-1 rounded-sm bg-gradient-to-b from-rose-500 via-amber-400 via-emerald-400 to-blue-600" />
               <span className="text-blue-600 dark:text-blue-400">Low</span>
@@ -117,25 +117,25 @@ export const Explainability: React.FC = () => {
       </div>
 
       {/* Bottom Row: Feature Contribution Bar Chart and Top Feature Contributions Table */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Left: Feature Contribution Bar Chart */}
-        <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4 transition-colors">
+        <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6 shadow-xs space-y-4 transition-colors">
           <h2 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-            Feature Contribution
+            SHAP Feature Contribution
           </h2>
 
-          <div className="space-y-4 pt-2">
+          <div className="space-y-3 sm:space-y-4 pt-1 sm:pt-2">
             {features.map((item) => {
               const isPositive = item.value >= 0;
               const barWidth = Math.min(100, Math.abs(item.value) * 180);
 
               return (
-                <div key={item.name} className="flex items-center gap-3 text-xs">
-                  <span className="w-24 text-slate-600 dark:text-slate-300 font-medium shrink-0">{item.name}</span>
+                <div key={item.name} className="flex items-center gap-2 sm:gap-3 text-xs">
+                  <span className="w-28 sm:w-36 text-slate-600 dark:text-slate-300 font-medium shrink-0 truncate">{item.name}</span>
                   <div className="flex-1 flex items-center">
-                    <div className="w-full bg-slate-100 dark:bg-slate-800 h-3.5 rounded-full overflow-hidden flex items-center px-0.5">
+                    <div className="w-full bg-slate-100 dark:bg-slate-800 h-3 sm:h-3.5 rounded-full overflow-hidden flex items-center px-0.5">
                       <div
-                        className={`h-2.5 rounded-full transition-all duration-700 ${
+                        className={`h-2 sm:h-2.5 rounded-full transition-all duration-700 ${
                           isPositive ? 'bg-blue-600' : 'bg-slate-400 dark:bg-slate-600'
                         }`}
                         style={{ width: `${Math.max(8, barWidth)}%` }}
