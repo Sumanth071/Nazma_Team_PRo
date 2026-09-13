@@ -30,24 +30,26 @@ export const InstallPWAButton: React.FC<InstallPWAButtonProps> = ({ variant = 'n
       )}
 
       {variant === 'banner' && (
-        <div className={`p-3 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-cyan-950/30 to-slate-900/40 border border-emerald-500/30 flex items-center justify-between gap-3 shadow-lg ${className}`}>
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30 shrink-0">
-              <Smartphone className="w-4 h-4 text-emerald-400" />
+        <div className={`p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50/90 to-cyan-50/60 dark:from-[#082026]/90 dark:via-[#091f2c]/80 dark:to-[#0d1838]/90 border border-emerald-200/90 dark:border-emerald-500/40 flex items-center justify-between gap-3 shadow-xs dark:shadow-lg transition-all ${className}`}>
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-9 h-9 rounded-xl bg-emerald-600/10 dark:bg-emerald-500/20 flex items-center justify-center border border-emerald-600/20 dark:border-emerald-500/30 shrink-0">
+              <Smartphone className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             </div>
-            <div>
-              <p className="text-xs font-bold text-slate-200">Install ColoAI Mobile App</p>
-              <p className="text-[11px] text-slate-400">Launch fullscreen from your home screen</p>
+            <div className="min-w-0">
+              <p className="text-xs font-bold text-slate-900 dark:text-white truncate">Install ColoAI Mobile App</p>
+              <p className="text-[11px] font-medium text-slate-600 dark:text-slate-300 truncate">Launch fullscreen from your home screen</p>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={promptInstall}
-            className="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all shadow-md active:scale-95 flex items-center gap-1.5 shrink-0"
-          >
-            <Download className="w-3.5 h-3.5" />
-            Install
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={promptInstall}
+              className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-400 dark:hover:bg-emerald-300 text-white dark:text-slate-950 font-bold text-xs transition-all shadow-sm hover:shadow active:scale-95 flex items-center gap-1.5 cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5" />
+              Install
+            </button>
+          </div>
         </div>
       )}
 
