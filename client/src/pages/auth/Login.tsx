@@ -170,10 +170,6 @@ export const Login: React.FC = () => {
             );
           })}
 
-          {/* Real-Time Holographic Laser Scanner Sweep Overlay */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
-            <div className="w-full h-16 bg-gradient-to-b from-transparent via-cyan-400/25 to-transparent border-b border-cyan-400/80 shadow-[0_0_20px_rgba(6,182,212,0.6)] animate-laser-scan" />
-          </div>
 
           {/* Top Header: Logo & Live Status Telemetry */}
           <div className="relative z-20 flex items-center justify-between gap-2 sm:gap-3">

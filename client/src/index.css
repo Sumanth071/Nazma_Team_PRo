@@ -70,23 +70,6 @@
   }
 }
 
-@keyframes laserScanline {
-  0% {
-    top: -8%;
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.9;
-  }
-  85% {
-    opacity: 0.9;
-  }
-  100% {
-    top: 108%;
-    opacity: 0;
-  }
-}
-
 @keyframes ecgPulse {
   0% {
     stroke-dashoffset: 200;
@@ -117,10 +100,7 @@
   animation: hospitalMotionFast3 4.2s ease-in-out infinite alternate;
 }
 
-.animate-laser-scan {
-  animation: laserScanline 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
 .animate-radar-sweep {
   animation: radarSweep 4s linear infinite;
 }
+
