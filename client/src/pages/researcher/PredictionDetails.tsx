@@ -10,6 +10,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { Prediction } from '../../types';
+import { getImageUrl, getReportDownloadUrl } from '../../utils/apiConfig';
 
 export const PredictionDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -53,8 +54,8 @@ export const PredictionDetails: React.FC = () => {
   }
 
   const imageUrl = prediction.imageId
-    ? `/uploads/${prediction.imageId.fileName}`
-    : '/sample_images/colon_001.jpg';
+    ? getImageUrl(`/uploads/${prediction.imageId.fileName}`)
+    : getImageUrl('/sample_images/colon_001.jpg');
 
   const analysisDate = new Date(prediction.createdAt).toLocaleDateString('en-US', {
     month: 'short',
@@ -172,7 +173,7 @@ export const PredictionDetails: React.FC = () => {
               type="button"
               onClick={() => {
                 const token = localStorage.getItem('coloai_token') || '';
-                window.open(`/api/reports/${prediction.reportId || prediction._id}/download?token=${token}`, '_blank');
+                window.open(getReportDownloadUrl(prediction.reportId || prediction._id, token), '_blank');
               }}
               className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer min-h-[44px]"
             >

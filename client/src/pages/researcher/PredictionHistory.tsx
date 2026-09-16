@@ -12,6 +12,7 @@ import {
   FileText,
 } from 'lucide-react';
 import { Prediction } from '../../types';
+import { getImageUrl, getReportDownloadUrl } from '../../utils/apiConfig';
 
 export const PredictionHistory: React.FC = () => {
   const [predictions, setPredictions] = useState<Prediction[]>([]);
@@ -132,8 +133,8 @@ export const PredictionHistory: React.FC = () => {
               ) : (
                 predictions.map((pred, index) => {
                   const img = pred.imageId
-                    ? `/uploads/${pred.imageId.fileName}`
-                    : `/sample_images/colon_00${(index % 3) + 1}.jpg`;
+                    ? getImageUrl(`/uploads/${pred.imageId.fileName}`)
+                    : getImageUrl(`/sample_images/colon_00${(index % 3) + 1}.jpg`);
 
                   return (
                     <tr key={pred._id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
@@ -187,7 +188,7 @@ export const PredictionHistory: React.FC = () => {
                             title="Download Report"
                             onClick={() => {
                               const token = localStorage.getItem('coloai_token') || '';
-                              window.open(`/api/reports/${pred.reportId || pred._id}/download?token=${token}`, '_blank');
+                              window.open(getReportDownloadUrl(pred.reportId || pred._id, token), '_blank');
                             }}
                             className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-800 dark:hover:text-slate-200 transition-colors"
                           >

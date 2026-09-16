@@ -51,6 +51,7 @@ temp/
 scratch/
 cloudflared.exe
 *.log
+LIVE_URL.txt
 
 # OS
 .DS_Store

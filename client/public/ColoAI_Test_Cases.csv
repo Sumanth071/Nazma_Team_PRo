@@ -1,0 +1,42 @@
+﻿Test ID,Module / Suite,Test Scenario,Role / Actor,Test Steps,Expected Result,Priority,Status
+TC-AUTH-01,Authentication,1-Click Demo Login,Any / Public,"1. Open login page.
+2. Click quick-fill button (Clinician/Researcher/Admin).
+3. Click 'Sign In'.",Automatically authenticates and redirects to the role-specific dashboard with user session active.,High,Passed
+TC-AUTH-02,Authentication,Manual Credential Login,Clinician,"1. Enter email 'clinician@coloaipoly.org'.
+2. Enter password 'Password123!'.
+3. Click 'Sign In'.",Successful login; clinician dashboard is rendered with clinical review navigation.,High,Passed
+TC-AUTH-03,Authentication,Invalid Credentials Handling,Any / Public,"1. Enter 'clinician@coloaipoly.org'.
+2. Enter invalid password 'wrongpass'.
+3. Click 'Sign In'.",Login rejected with clear error alert: 'Invalid email or password'.,Medium,Passed
+TC-AUTH-04,Authentication,RBAC Route Protection,Researcher,"1. Log in as Researcher.
+2. In URL bar, manually navigate to '/admin' or '/admin/users'.",Unauthorized access denied or redirected to '/dashboard'. Protected admin settings remain inaccessible.,High,Passed
+TC-AUTH-05,Authentication,Session Logout,Any Role,"1. Click profile avatar menu in header.
+2. Select 'Logout'.","JWT session cleared from storage, user redirected to '/login', previous pages protected.",Medium,Passed
+TC-AI-01,AI Inference,Sample Image 1-Click Selection,Researcher / Clinician,"1. Go to 'New Analysis' (/analyze).
+2. Under 'Recent / Sample Images', click 'colon_001.jpg'.",Sample image loads instantly into the analysis drop-zone container with preview.,High,Passed
+TC-AI-02,AI Inference,Endoscopic Image Upload & Analysis,Researcher / Clinician,"1. Upload or drag a colonoscopy image (JPG/PNG).
+2. Click 'Start Diagnostic Analysis'.","Pipeline executes: preprocessing, deep feature extraction, attention mapping, and classification.",Critical,Passed
+TC-AI-03,AI Inference,Classification Result Display,Researcher / Clinician,"1. Wait 2-4 seconds for AI microservice response.
+2. View the Prediction Result page.","Displays diagnostic class (e.g. Adenomatous / Hyperplastic / Serrated), confidence score %, and risk level.",Critical,Passed
+TC-AI-04,AI Inference,Diagnostic History Logging,Researcher / Clinician,1. Navigate to 'Prediction History' (/history).,"Newly analyzed case appears at the top of the table with thumbnail, timestamp, and predicted diagnosis.",High,Passed
+TC-XAI-01,Explainable AI,Visual Attention / SHAP Heatmap,Researcher / Clinician,"1. From prediction result, click 'View Explainability' (/explanation/:id).",Renders overlaid visual heatmap highlighting the exact tissue regions influencing the prediction.,Critical,Passed
+TC-XAI-02,Explainable AI,Feature Attribution Breakdown,Researcher,1. Inspect feature importance graphs on the explainability view.,"Displays graphical breakdown of morphological, textural, and boundary features driving classification.",High,Passed
+TC-XAI-03,Explainable AI,Heatmap Overlay & Opacity Control,Clinician,1. Use transparency slider / overlay toggles to compare original image vs attention map.,Overlay smoothly transitions between raw endoscopic frame and heatmap without distortion.,Medium,Passed
+TC-CLIN-01,Clinical Review,Review Queue Inspection,Clinician / Admin,"1. Log in as Clinician.
+2. Navigate to 'Clinical Reviews' (/reviews).","Displays list of cases awaiting clinical validation, pathology confirmation, or review.",High,Passed
+TC-CLIN-02,Clinical Review,Physician Approval of AI Diagnosis,Clinician,"1. Open a pending review case.
+2. Enter clinical notes: 'Concur with adenomatous finding'.
+3. Click 'Approve Diagnosis'.",Case status updates to 'Approved'; clinician identity and timestamp recorded in audit trail.,High,Passed
+TC-CLIN-03,Clinical Review,Clinical Override & Ground Truth Correction,Clinician,"1. Open a case.
+2. Select alternative pathology classification.
+3. Enter rationale notes and click 'Submit Override'.",AI classification marked as overridden with physician's verified ground truth saved.,High,Passed
+TC-REP-01,Reporting,Export PDF Diagnostic Report,Clinician / Researcher,"1. Navigate to 'Reports' (/reports) or case detail page.
+2. Click 'Download / Export PDF Report'.","Generates and downloads standardized PDF report including patient/case ID, diagnosis, confidence %, and heatmap.",High,Passed
+TC-REP-02,Reporting,Case Search & Category Filter,Researcher,"1. In History or Case Management, enter search keyword or filter by polyp category / date range.",Results dynamically filter to matching records with pagination.,Medium,Passed
+TC-ADM-01,Administration,User & Role Management,Admin,"1. Log in as Admin.
+2. Navigate to 'User Management' (/admin/users).","Renders list of registered users, roles (Admin, Clinician, Researcher), and account statuses.",High,Passed
+TC-ADM-02,Administration,System Audit Logging,Admin,1. Navigate to 'Audit Logs' (/admin/audit-logs).,"Displays immutable chronological log of system actions (logins, diagnostic runs, reviews, overrides).",High,Passed
+TC-ADM-03,Administration,Model Performance & Metrics,Admin,1. Navigate to 'Model Performance' (/admin/performance).,"Displays ROC curves, Sensitivity, Specificity, Accuracy metrics, and confusion matrix data.",Medium,Passed
+TC-EDGE-01,Edge Cases,Unsupported File Format Upload,Researcher / Clinician,"1. In 'New Analysis', attempt to upload a .txt or .pdf file.","UI immediately rejects upload with error: 'Only JPG, PNG, and DICOM images are supported'.",Medium,Passed
+TC-EDGE-02,Edge Cases,Dark / Light Theme Consistency,Any Role,1. Click the Sun/Moon theme toggle in the navigation bar.,"All UI components, charts, cards, and tables instantly switch between dark and light modes cleanly.",Low,Passed
+TC-EDGE-03,Edge Cases,Direct URL Refresh & Navigation,Any Role,"1. Navigate to nested routes (/analyze, /history, /reports) and refresh browser (F5).",Page reloads seamlessly without 404 Not Found error; user session preserved.,Medium,Passed

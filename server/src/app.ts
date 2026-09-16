@@ -28,7 +28,10 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
 app.use(cors({
-  origin: '*',
+  origin: (_origin, callback) => {
+    // Allow any origin (Vercel, custom domain, localhost, mobile, preview URLs)
+    callback(null, true);
+  },
   credentials: true,
 }));
 app.use(morgan('dev'));
@@ -40,9 +43,13 @@ const sampleImagesDir = path.resolve(process.cwd(), '../client/public/sample_ima
 app.use('/uploads', express.static(config.uploadDir));
 app.use('/uploads', express.static(sampleImagesDir));
 app.use('/uploads', (req, res, next) => {
-  const fallback = path.resolve(sampleImagesDir, 'colon_001.jpg');
-  if (fs.existsSync(fallback)) {
-    return res.sendFile(fallback);
+  const serverFallback = path.resolve(config.uploadDir, 'colon_001.jpg');
+  if (fs.existsSync(serverFallback)) {
+    return res.sendFile(serverFallback);
+  }
+  const clientFallback = path.resolve(sampleImagesDir, 'colon_001.jpg');
+  if (fs.existsSync(clientFallback)) {
+    return res.sendFile(clientFallback);
   }
   next();
 });

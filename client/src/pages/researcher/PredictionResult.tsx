@@ -11,6 +11,7 @@ import {
   Eye,
 } from 'lucide-react';
 import { Prediction } from '../../types';
+import { getImageUrl, getReportDownloadUrl } from '../../utils/apiConfig';
 
 export const PredictionResult: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -38,7 +39,7 @@ export const PredictionResult: React.FC = () => {
     try {
       const res = await api.post('/reports', { predictionId: prediction._id });
       const token = localStorage.getItem('coloai_token') || '';
-      window.open(`/api/reports/${res.data.report._id}/download?token=${token}`, '_blank');
+      window.open(getReportDownloadUrl(res.data.report._id, token), '_blank');
       setPrediction({ ...prediction, reportId: res.data.report._id });
     } catch (err) {
       console.error('Report generation failed:', err);
@@ -74,8 +75,8 @@ export const PredictionResult: React.FC = () => {
   }
 
   const imageUrl = prediction.imageId
-    ? `/uploads/${prediction.imageId.fileName}`
-    : '/sample_images/colon_001.jpg';
+    ? getImageUrl(`/uploads/${prediction.imageId.fileName}`)
+    : getImageUrl('/sample_images/colon_001.jpg');
 
   const analysisDate = new Date(prediction.createdAt).toLocaleDateString('en-US', {
     month: 'short',

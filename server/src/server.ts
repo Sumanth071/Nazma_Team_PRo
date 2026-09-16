@@ -11,7 +11,8 @@ const startServer = async () => {
     console.log('[Server] Checking and seeding initial system records...');
     await seedDatabase();
 
-    app.listen(config.port, () => {
+    const host = process.env.HOST || '0.0.0.0';
+    app.listen(config.port, host, () => {
       console.log(`=======================================================`);
       console.log(`🚀 ColoAI-Polyp Express Backend running on port ${config.port}`);
       console.log(`📡 Health Check: http://localhost:${config.port}/api/health`);

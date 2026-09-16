@@ -10,6 +10,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { ReportItem } from '../../types';
+import { getReportDownloadUrl } from '../../utils/apiConfig';
 
 export const Reports: React.FC = () => {
   const [reports, setReports] = useState<ReportItem[]>([]);
@@ -44,7 +45,7 @@ export const Reports: React.FC = () => {
       const firstPred = predsRes.data.predictions?.[0];
       if (firstPred) {
         const genRes = await api.post('/reports', { predictionId: firstPred._id });
-        window.open(`/api/reports/${genRes.data.report._id}/download?token=${token}`, '_blank');
+        window.open(getReportDownloadUrl(genRes.data.report._id, token), '_blank');
         fetchReports();
       } else {
         window.print();
@@ -136,7 +137,7 @@ export const Reports: React.FC = () => {
           }),
           prediction: predClass,
           status: 'Ready',
-          downloadUrl: `/api/reports/${r._id}/download?token=${localStorage.getItem('coloai_token') || ''}`,
+          downloadUrl: getReportDownloadUrl(r._id, localStorage.getItem('coloai_token') || ''),
         };
       })
     : defaultMockReports;

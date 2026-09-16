@@ -1,0 +1,28 @@
+# Render Blueprint Specification for ColoAI / PolypAI
+# https://render.com/docs/blueprint-spec
+
+services:
+  # Node.js Express Backend Service
+  - type: web
+    name: coloai-backend
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: server
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        value: mongodb+srv://ksumanthyadav120:mongodb123@suman.1lwpnwk.mongodb.net/coloai_prod?retryWrites=true&w=majority
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: never
+      - key: STORAGE_TYPE
+        value: local
+      - key: UPLOAD_DIR
+        value: ./uploads

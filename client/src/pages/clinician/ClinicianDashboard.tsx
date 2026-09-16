@@ -11,6 +11,7 @@ import {
   Stethoscope,
 } from 'lucide-react';
 import { Prediction } from '../../types';
+import { getImageUrl } from '../../utils/apiConfig';
 
 export const ClinicianDashboard: React.FC = () => {
   const [pendingCases, setPendingCases] = useState<Prediction[]>([]);
@@ -133,8 +134,8 @@ export const ClinicianDashboard: React.FC = () => {
                   ) : (
                     pendingCases.map((pred, idx) => {
                       const img = pred.imageId
-                        ? `/uploads/${pred.imageId.fileName}`
-                        : `/sample_images/colon_00${(idx % 3) + 1}.jpg`;
+                        ? getImageUrl(`/uploads/${pred.imageId.fileName}`)
+                        : getImageUrl(`/sample_images/colon_00${(idx % 3) + 1}.jpg`);
 
                       return (
                         <tr key={pred._id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">

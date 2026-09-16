@@ -8,6 +8,7 @@ import {
   FileCheck,
 } from 'lucide-react';
 import { Prediction } from '../../types';
+import { getImageUrl } from '../../utils/apiConfig';
 import { useAuth } from '../../context/AuthContext';
 
 export const ClinicalReview: React.FC = () => {
@@ -75,8 +76,8 @@ export const ClinicalReview: React.FC = () => {
   };
 
   const imageUrl = selectedPrediction?.imageId
-    ? `/uploads/${selectedPrediction.imageId.fileName}`
-    : '/sample_images/colon_001.jpg';
+    ? getImageUrl(`/uploads/${selectedPrediction.imageId.fileName}`)
+    : getImageUrl('/sample_images/colon_001.jpg');
 
   return (
     <div className="space-y-6">

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../../api/client';
 import { ArrowLeft } from 'lucide-react';
 import { Prediction } from '../../types';
+import { getImageUrl } from '../../utils/apiConfig';
 
 export const Explainability: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -46,8 +47,8 @@ export const Explainability: React.FC = () => {
     : defaultFeatures;
 
   const imageUrl = prediction?.imageId
-    ? `/uploads/${prediction.imageId.fileName}`
-    : '/sample_images/colon_001.jpg';
+    ? getImageUrl(`/uploads/${prediction.imageId.fileName}`)
+    : getImageUrl('/sample_images/colon_001.jpg');
 
   const heatmapUrl = prediction?.explanationId?.heatmapBase64 || imageUrl;
 
