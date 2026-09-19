@@ -13,7 +13,8 @@
 
 The entire platform is actively deployed and accessible over a secure global HTTPS tunnel. You can evaluate the full system on any device (Desktop, Laptop, Tablet, or Mobile Phone) without installing software:
 
-- 🔗 **Live Web Application URL:** [https://ace-organizer-blog-thumbs.trycloudflare.com](https://ace-organizer-blog-thumbs.trycloudflare.com)
+- 🔗 **Permanent Vercel Web App URL:** [https://nazma-team-p-ro.vercel.app](https://nazma-team-p-ro.vercel.app)
+- 🌐 **Alternative Live Tunnel URL:** [https://ace-organizer-blog-thumbs.trycloudflare.com](https://ace-organizer-blog-thumbs.trycloudflare.com)
 - 📡 **Backend Health Check API:** [https://ace-organizer-blog-thumbs.trycloudflare.com/api/health](https://ace-organizer-blog-thumbs.trycloudflare.com/api/health)
 - 🧠 **AI Microservice Health Check:** `http://localhost:8000/health` (Internal AI Engine)
 
