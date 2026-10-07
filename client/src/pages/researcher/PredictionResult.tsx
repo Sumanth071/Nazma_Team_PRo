@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../../api/client';
 import { ProbabilityBar } from '../../components/ProbabilityBar';
+import { VoiceExplanationWidget } from '../../components/VoiceExplanationWidget';
+import { MicroscopicZoomInspection } from '../../components/MicroscopicZoomInspection';
 import {
   FileText,
   Download,
@@ -100,6 +102,13 @@ export const PredictionResult: React.FC = () => {
           Analysis ID: {prediction.analysisId}
         </div>
       </div>
+
+      {/* Guide Requirement 1: Automated / 1-Click Voice Clinical Briefing with Risk Level */}
+      <VoiceExplanationWidget
+        predictedClass={prediction.predictedClass}
+        confidence={prediction.confidence}
+        analysisId={prediction.analysisId}
+      />
 
       {/* Main 2-Column Split matching Screen 5 */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -242,6 +251,12 @@ export const PredictionResult: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Guide Requirement 2: 3-Region Microscopic Zoom Inspection (Kudo, NICE, Paris Criteria) */}
+      <MicroscopicZoomInspection
+        imageUrl={imageUrl}
+        predictedClass={prediction.predictedClass}
+      />
     </div>
   );
 };

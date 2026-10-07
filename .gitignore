@@ -56,3 +56,5 @@ LIVE_URL.txt
 # OS
 .DS_Store
 Thumbs.db
+.vercel
+.env*

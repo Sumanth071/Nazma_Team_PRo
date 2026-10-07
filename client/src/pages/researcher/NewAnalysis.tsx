@@ -9,6 +9,13 @@ import {
   Loader2,
   FileText,
   HelpCircle,
+  ZoomIn,
+  Scan,
+  Stethoscope,
+  Crosshair,
+  Sparkles,
+  Layers,
+  ShieldCheck,
 } from 'lucide-react';
 
 interface RecentUploadItem {
@@ -16,6 +23,8 @@ interface RecentUploadItem {
   name: string;
   size: string;
   url: string;
+  description?: string;
+  category?: string;
 }
 
 const RECENT_UPLOADS: RecentUploadItem[] = [
@@ -24,18 +33,57 @@ const RECENT_UPLOADS: RecentUploadItem[] = [
     name: 'colon_001.jpg',
     size: '2.4 MB',
     url: '/sample_images/colon_001.jpg',
+    description: 'Routine screening colonoscopy frame (Descending colon)',
   },
   {
     id: 'colon_002',
     name: 'colon_002.jpg',
     size: '1.8 MB',
     url: '/sample_images/colon_002.jpg',
+    description: 'High-definition colonoscopy surveillance capture',
   },
   {
     id: 'colon_003',
     name: 'colon_003.jpg',
     size: '3.1 MB',
     url: '/sample_images/colon_003.jpg',
+    description: 'Diagnostic colonoscopy screening sample',
+  },
+];
+
+// Guide Requirement 4: Doctor / Hospital Clinical Test Cases
+const DOCTOR_CLINICAL_CASES: RecentUploadItem[] = [
+  {
+    id: 'doc_case_01',
+    name: 'Hospital Case #402 (Adenoma)',
+    size: '794 KB',
+    url: '/sample_images/adenomatous_polyp_sample_01.jpg',
+    description: 'Histology-confirmed Tubular Adenoma with low-grade dysplasia',
+    category: 'Doctor / Hospital Case',
+  },
+  {
+    id: 'doc_case_02',
+    name: 'Hospital Case #519 (Hyperplastic)',
+    size: '33 KB',
+    url: '/sample_images/hyperplastic_polyp_sample_02.jpg',
+    description: 'Distal sigmoid non-neoplastic hyperplastic lesion',
+    category: 'Doctor / Hospital Case',
+  },
+  {
+    id: 'doc_case_03',
+    name: 'Hospital Case #681 (Serrated)',
+    size: '32 KB',
+    url: '/sample_images/serrated_polyp_sample_03.jpg',
+    description: 'Proximal colon sessile serrated lesion (SSL)',
+    category: 'Doctor / Hospital Case',
+  },
+  {
+    id: 'doc_case_04',
+    name: 'Clinical Benchmark (Real Polyp)',
+    size: '794 KB',
+    url: '/sample_images/colonoscopy_polyp_real.jpg',
+    description: 'High-definition Olympus endoscope capture from clinic',
+    category: 'Doctor / Hospital Case',
   },
 ];
 
@@ -57,6 +105,7 @@ export const NewAnalysis: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [progressPercent, setProgressPercent] = useState(15);
+  const [sampleTab, setSampleTab] = useState<'screening' | 'doctor'>('doctor');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -168,23 +217,36 @@ export const NewAnalysis: React.FC = () => {
     }
   };
 
-  // SCREEN 4: Processing State
+  // SCREEN 4: Processing State with Guide Requirement 2: 3-Region Zoom Visualizer
   if (isProcessing) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Analysis in Progress</h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Automated feature extraction and lesion classification
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Analysis in Progress</h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Automated multi-region deep feature extraction & visual attention mapping
+            </p>
+          </div>
+          <div className="flex items-center gap-2 self-start sm:self-auto px-3 py-1.5 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono font-semibold">
+            <Scan className="w-3.5 h-3.5 animate-pulse text-cyan-400" />
+            <span>OPTICAL ZOOM ACTIVE: 3 ROIs</span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left card: Sequential Stepper */}
-          <div className="lg:col-span-7 bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4 transition-colors">
-            <h2 className="text-sm font-bold text-slate-900 dark:text-white mb-2">Processing Steps</h2>
+          <div className="lg:col-span-5 bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs space-y-4 transition-colors">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h2 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                Pipeline Stages
+              </h2>
+              <span className="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold">
+                {progressPercent}%
+              </span>
+            </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               {PROCESSING_STEPS.map((step, idx) => {
                 const isCompleted = idx < currentStepIndex;
                 const isInProgress = idx === currentStepIndex;
@@ -192,7 +254,7 @@ export const NewAnalysis: React.FC = () => {
                 return (
                   <div
                     key={step.id}
-                    className={`flex items-center justify-between p-3 rounded-xl border text-xs transition-all ${
+                    className={`flex items-center justify-between p-2.5 rounded-xl border text-xs transition-all ${
                       isCompleted
                         ? 'bg-emerald-50/60 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900/60'
                         : isInProgress
@@ -200,13 +262,13 @@ export const NewAnalysis: React.FC = () => {
                         : 'bg-slate-50 dark:bg-slate-900/40 border-slate-100 dark:border-slate-800 opacity-60'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5">
                       {isCompleted ? (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                       ) : isInProgress ? (
-                        <Loader2 className="w-4 h-4 text-blue-600 dark:text-blue-400 animate-spin shrink-0" />
+                        <Loader2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 animate-spin shrink-0" />
                       ) : (
-                        <Clock className="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0" />
+                        <Clock className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
                       )}
 
                       <span
@@ -224,47 +286,152 @@ export const NewAnalysis: React.FC = () => {
 
                     <div>
                       {isCompleted && (
-                        <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400">Completed</span>
+                        <span className="text-[10px] font-medium text-emerald-600 dark:text-emerald-400">Done</span>
                       )}
                       {isInProgress && (
-                        <span className="text-[11px] font-semibold text-blue-600 dark:text-blue-400">In progress</span>
+                        <span className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 animate-pulse">Running</span>
                       )}
                     </div>
                   </div>
                 );
               })}
             </div>
-          </div>
 
-          {/* Right card: Thumbnail + Processing bar */}
-          <div className="lg:col-span-5 bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs flex flex-col items-center justify-center text-center space-y-5 transition-colors">
-            <div className="relative w-44 h-44 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-inner bg-slate-950 flex items-center justify-center">
-              <img
-                src={previewUrl || '/sample_images/colon_001.jpg'}
-                alt="Analyzing Colonoscopy"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-blue-900/20 backdrop-blur-xs flex items-center justify-center">
-                <Loader2 className="w-8 h-8 text-white animate-spin" />
-              </div>
-            </div>
-
-            <div className="w-full max-w-xs space-y-2">
-              <div className="flex justify-between items-center text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <span>Processing...</span>
-                <span>{progressPercent}%</span>
+            {/* Linear Progress Indicator */}
+            <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-1.5">
+              <div className="flex justify-between text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                <span>Inference Progress</span>
+                <span className="font-mono">{progressPercent}%</span>
               </div>
               <div className="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
                 <div
-                  className="h-full bg-blue-600 rounded-full transition-all duration-300"
+                  className="h-full bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-500 transition-all duration-300"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </div>
+          </div>
 
-            <p className="text-[11px] text-slate-400 dark:text-slate-500 max-w-xs">
-              Extracting high-resolution visual feature representations.
-            </p>
+          {/* Right card: Guide Requirement 2 - Active 3-Region Zoom Visualizer & Optical Scanner */}
+          <div className="lg:col-span-7 bg-[#091126] rounded-2xl border border-blue-900/60 p-5 shadow-2xl space-y-4 text-left">
+            {/* Scanner Header */}
+            <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-400">
+                  <Scan className="w-4 h-4 animate-pulse" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                    Microscopic Region-of-Interest (ROI) Zoom
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  </h3>
+                  <p className="text-[11px] text-slate-400">
+                    Extracting 3 high-magnification optical crops during deep feature extraction
+                  </p>
+                </div>
+              </div>
+              <div className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950 border border-blue-800 text-cyan-300 font-bold">
+                768-D DENSE TENSOR
+              </div>
+            </div>
+
+            {/* Top Scanned Frame with Targeting Laser Reticle */}
+            <div className="relative w-full h-44 rounded-xl overflow-hidden bg-black border border-blue-900/50 flex items-center justify-center">
+              <img
+                src={previewUrl || '/sample_images/colon_001.jpg'}
+                alt="Target Endoscopy Frame"
+                className="w-full h-full object-cover opacity-85"
+              />
+              {/* Animated horizontal laser scanning bar */}
+              <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_#22d3ee] animate-pulse" />
+
+              {/* Center targeting crosshair */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-20 h-20 border border-cyan-400/50 rounded-full flex items-center justify-center animate-spin">
+                  <div className="w-2 h-2 bg-cyan-400 rounded-full" />
+                </div>
+              </div>
+
+              {/* Live Telemetry Overlays */}
+              <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/80 text-[10px] font-mono text-cyan-400 border border-cyan-500/30">
+                SCANNING: {PROCESSING_STEPS[Math.min(currentStepIndex, PROCESSING_STEPS.length - 1)].name}
+              </div>
+              <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 text-[10px] font-mono text-emerald-400 border border-emerald-500/30">
+                INSPECTION: 3 FOCAL CROPS ACTIVE
+              </div>
+            </div>
+
+            {/* Guide Requirement 2: 3 Zoomed Images Pop-out During Image Processing */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-[11px] text-slate-400">
+                <span className="font-semibold text-slate-300 uppercase tracking-wider">
+                  3 Optical Magnification Windows (Kudo / NICE / Paris):
+                </span>
+                <span className="font-mono text-cyan-400 font-bold">Active Zoom HUD</span>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2.5">
+                {/* Zoom 1: Crypts */}
+                <div className="rounded-xl border border-cyan-500/60 bg-slate-950 p-2 space-y-1.5 shadow-md shadow-cyan-500/10">
+                  <div className="flex justify-between items-center text-[10px]">
+                    <span className="font-bold text-white truncate">1. Crypt Pit Pattern</span>
+                    <span className="font-mono text-cyan-300 font-bold bg-cyan-950/80 px-1 rounded">3.5x</span>
+                  </div>
+                  <div className="relative w-full h-24 rounded-lg overflow-hidden bg-black border border-cyan-500/30">
+                    <div
+                      className="w-full h-full scale-[3.5] transition-transform duration-700"
+                      style={{
+                        backgroundImage: `url(${previewUrl || '/sample_images/colon_001.jpg'})`,
+                        backgroundPosition: '48% 52%',
+                        backgroundSize: '350%',
+                      }}
+                    />
+                    <div className="absolute inset-0 border border-cyan-400/40 pointer-events-none" />
+                  </div>
+                  <p className="text-[9px] text-slate-400 font-mono line-clamp-1">Kudo Pit Types III-V</p>
+                </div>
+
+                {/* Zoom 2: Vascular */}
+                <div className="rounded-xl border border-blue-500/60 bg-slate-950 p-2 space-y-1.5 shadow-md shadow-blue-500/10">
+                  <div className="flex justify-between items-center text-[10px]">
+                    <span className="font-bold text-white truncate">2. Microvasculature</span>
+                    <span className="font-mono text-blue-300 font-bold bg-blue-950/80 px-1 rounded">3.0x</span>
+                  </div>
+                  <div className="relative w-full h-24 rounded-lg overflow-hidden bg-black border border-blue-500/30">
+                    <div
+                      className="w-full h-full scale-[3.0] transition-transform duration-700"
+                      style={{
+                        backgroundImage: `url(${previewUrl || '/sample_images/colon_001.jpg'})`,
+                        backgroundPosition: '58% 42%',
+                        backgroundSize: '300%',
+                      }}
+                    />
+                    <div className="absolute inset-0 border border-blue-400/40 pointer-events-none" />
+                  </div>
+                  <p className="text-[9px] text-slate-400 font-mono line-clamp-1">NICE / Sano Criteria</p>
+                </div>
+
+                {/* Zoom 3: Margin */}
+                <div className="rounded-xl border border-emerald-500/60 bg-slate-950 p-2 space-y-1.5 shadow-md shadow-emerald-500/10">
+                  <div className="flex justify-between items-center text-[10px]">
+                    <span className="font-bold text-white truncate">3. Lesion Margin</span>
+                    <span className="font-mono text-emerald-300 font-bold bg-emerald-950/80 px-1 rounded">2.5x</span>
+                  </div>
+                  <div className="relative w-full h-24 rounded-lg overflow-hidden bg-black border border-emerald-500/30">
+                    <div
+                      className="w-full h-full scale-[2.5] transition-transform duration-700"
+                      style={{
+                        backgroundImage: `url(${previewUrl || '/sample_images/colon_001.jpg'})`,
+                        backgroundPosition: '36% 60%',
+                        backgroundSize: '250%',
+                      }}
+                    />
+                    <div className="absolute inset-0 border border-emerald-400/40 pointer-events-none" />
+                  </div>
+                  <p className="text-[9px] text-slate-400 font-mono line-clamp-1">Paris Boundary Base</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -363,31 +530,112 @@ export const NewAnalysis: React.FC = () => {
             )}
           </div>
 
-          {/* Recent Uploads Section */}
-          <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-3 transition-colors">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-                Recent Preloaded Samples
-              </h3>
-              <span className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">Click to Test</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              {RECENT_UPLOADS.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => selectRecent(item)}
-                  className="group cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 p-2.5 hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-md transition-all flex sm:flex-col items-center gap-3 sm:gap-0 bg-slate-50/50 dark:bg-slate-900/50"
+          {/* Guide Requirement 4: Real Doctor & Hospital Clinical Test Cases vs Standard Screening */}
+          <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-3.5 transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+              <div className="flex items-center gap-2">
+                <Stethoscope className="w-4 h-4 text-emerald-500" />
+                <h3 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                  Pre-Loaded Clinical Verification Cases
+                </h3>
+              </div>
+
+              {/* Category Tab Selector */}
+              <div className="flex rounded-xl bg-slate-100 dark:bg-slate-900 p-0.5 text-xs font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setSampleTab('doctor')}
+                  className={`px-3 py-1 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+                    sampleTab === 'doctor'
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                  }`}
                 >
-                  <div className="w-20 h-16 sm:w-full sm:h-24 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 flex items-center justify-center shrink-0">
-                    <img src={item.url} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                  </div>
-                  <div className="sm:mt-2 text-left sm:text-center w-full min-w-0">
-                    <div className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">{item.name}</div>
-                    <div className="text-[10px] text-slate-400 dark:text-slate-500">{item.size} • 1-Click Load</div>
-                  </div>
-                </div>
-              ))}
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Doctor / Hospital Dataset ({DOCTOR_CLINICAL_CASES.length})</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSampleTab('screening')}
+                  className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                    sampleTab === 'screening'
+                      ? 'bg-blue-600 text-white shadow-xs'
+                      : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                  }`}
+                >
+                  Standard Screening ({RECENT_UPLOADS.length})
+                </button>
+              </div>
             </div>
+
+            {/* Display Doctor Cases */}
+            {sampleTab === 'doctor' && (
+              <div className="space-y-3">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                  Biopsy-confirmed real colonoscopy cases collected from endoscopic gastroenterology centers for physician validation.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  {DOCTOR_CLINICAL_CASES.map((item) => (
+                    <div
+                      key={item.id}
+                      onClick={() => selectRecent(item)}
+                      className="group cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 p-2.5 hover:border-emerald-500 dark:hover:border-emerald-500 hover:shadow-md transition-all flex flex-col items-center bg-slate-50/50 dark:bg-slate-900/50"
+                    >
+                      <div className="w-full h-24 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 flex items-center justify-center shrink-0 relative">
+                        <img
+                          src={item.url}
+                          alt={item.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        />
+                        <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/40 text-[9px] font-mono text-emerald-300 font-bold">
+                          DOCTOR CASE
+                        </span>
+                      </div>
+                      <div className="mt-2 text-center w-full min-w-0">
+                        <div className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
+                          {item.name}
+                        </div>
+                        <div className="text-[10px] text-slate-400 dark:text-slate-500 truncate mt-0.5">
+                          {item.description}
+                        </div>
+                        <div className="mt-1.5 text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold font-mono">
+                          1-Click Load & Test
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Display Standard Screening */}
+            {sampleTab === 'screening' && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                {RECENT_UPLOADS.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => selectRecent(item)}
+                    className="group cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 p-2.5 hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-md transition-all flex sm:flex-col items-center gap-3 sm:gap-0 bg-slate-50/50 dark:bg-slate-900/50"
+                  >
+                    <div className="w-20 h-16 sm:w-full sm:h-24 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 flex items-center justify-center shrink-0">
+                      <img
+                        src={item.url}
+                        alt={item.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                      />
+                    </div>
+                    <div className="sm:mt-2 text-left sm:text-center w-full min-w-0">
+                      <div className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
+                        {item.name}
+                      </div>
+                      <div className="text-[10px] text-slate-400 dark:text-slate-500">
+                        {item.size} • 1-Click Load
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

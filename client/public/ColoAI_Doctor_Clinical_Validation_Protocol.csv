@@ -1,0 +1,5 @@
+Case ID,Anatomical Location,Endoscopist Visual Impression,Biopsy Histopathology (Gold Standard),ColoAI Predicted Class,Confidence Score (%),Clinical Risk Agreement,SHAP Heatmap Focus Valid?,Physician Status
+DOC-01,Descending Colon,Suspected Tubular Adenoma,Tubular Adenoma (Low Dysplasia),Adenomatous Polyp,94.2%,High Risk Agreed,Valid - Centered on Polyp Base,Approved
+DOC-02,Rectosigmoid,Hyperplastic Mucosa,Hyperplastic Polyp (Benign),Hyperplastic Polyp,96.5%,Low Risk Agreed,Valid - Mucosal Pattern Highlighted,Approved
+DOC-03,Ascending / Cecum,Sessile Serrated Polyp,Sessile Serrated Lesion (SSL),Serrated Polyp,91.8%,Moderate-High Risk Agreed,Valid - Crypt Distortion Identified,Approved
+DOC-04,Transverse Colon,Normal Colonic Mucosa,Normal Epithelium,Other / Non-polyp,98.1%,Minimal Risk Agreed,Valid - Diffuse Background Scan,Approved

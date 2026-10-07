@@ -4,6 +4,8 @@ import api from '../../api/client';
 import { ArrowLeft } from 'lucide-react';
 import { Prediction } from '../../types';
 import { getImageUrl } from '../../utils/apiConfig';
+import { VoiceExplanationWidget } from '../../components/VoiceExplanationWidget';
+import { MicroscopicZoomInspection } from '../../components/MicroscopicZoomInspection';
 
 export const Explainability: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -75,6 +77,15 @@ export const Explainability: React.FC = () => {
           Visual Attention Active
         </div>
       </div>
+
+      {/* Guide Requirement 1: Clinical Audio Voice Summary with Risk Assessment */}
+      {prediction && (
+        <VoiceExplanationWidget
+          predictedClass={prediction.predictedClass}
+          confidence={prediction.confidence}
+          analysisId={prediction.analysisId}
+        />
+      )}
 
       {/* Top Row: Original Image and SHAP Visualization side-by-side */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
@@ -198,6 +209,14 @@ export const Explainability: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Guide Requirement 2: 3-Region Microscopic Zoom Inspection (Kudo, NICE, Paris) */}
+      {prediction && (
+        <MicroscopicZoomInspection
+          imageUrl={imageUrl}
+          predictedClass={prediction.predictedClass}
+        />
+      )}
     </div>
   );
 };

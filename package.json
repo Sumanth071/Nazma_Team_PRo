@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Explainable Colorectal Polyp Classification Diagnostic Platform using Deep Learning and SHAP (MERN + Python FastAPI)",
   "scripts": {
+    "demo": "run-demo.bat",
+    "run-demo": "run-demo.bat",
     "dev:server": "npm --prefix server run dev",
     "dev:client": "npm --prefix client run dev",
     "dev:ai": "powershell -Command \"& ai_service/.venv/Scripts/python.exe -m uvicorn app.main:app --app-dir ai_service --host 0.0.0.0 --port 8000 --reload\"",
