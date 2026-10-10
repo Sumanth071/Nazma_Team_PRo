@@ -14,8 +14,9 @@
 The entire platform is actively deployed and accessible over a secure global HTTPS tunnel. You can evaluate the full system on any device (Desktop, Laptop, Tablet, or Mobile Phone) without installing software:
 
 - 🔗 **Permanent Vercel Web App URL:** [https://nazma-team-p-ro.vercel.app](https://nazma-team-p-ro.vercel.app)
-- 🌐 **Alternative Live Tunnel URL:** [https://ace-organizer-blog-thumbs.trycloudflare.com](https://ace-organizer-blog-thumbs.trycloudflare.com)
-- 📡 **Backend Health Check API:** [https://ace-organizer-blog-thumbs.trycloudflare.com/api/health](https://ace-organizer-blog-thumbs.trycloudflare.com/api/health)
+- 🚀 **Production Render Backend API:** [https://coloai-backend.onrender.com/api](https://coloai-backend.onrender.com/api)
+- 📡 **Backend Health Check API:** [https://coloai-backend.onrender.com/api/health](https://coloai-backend.onrender.com/api/health)
+- 🌐 **Alternative Live Edge Tunnel URL:** [https://off-restructuring-healthy-drink.trycloudflare.com](https://off-restructuring-healthy-drink.trycloudflare.com)
 - 🧠 **AI Microservice Health Check:** `http://localhost:8000/health` (Internal AI Engine)
 
 *(Note: If testing locally on the host machine, the application is also served at `http://localhost:5173`).*
@@ -96,7 +97,7 @@ Rigorous cross-validation on endoscopic test splits yielded the following metric
 Follow this step-by-step path to experience the complete clinical workflow:
 
 ### Step 1: Researcher Persona (Inference & Explainability)
-1. Open the [Live URL](https://ace-organizer-blog-thumbs.trycloudflare.com) and click **"AI Researcher Demo"**.
+1. Open the [Live URL](https://nazma-team-p-ro.vercel.app) and click **"AI Researcher Demo"** (or use the instant 1-Click persona on the login screen).
 2. From the dashboard, click **"Start New Analysis"**.
 3. In the **Sample Gallery** on the right, click **"Adenomatous Polyp Sample"**.
 4. Click **"Execute Deep AI Analysis"** and watch the multi-stage inference pipeline.
