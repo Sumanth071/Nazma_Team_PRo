@@ -112,8 +112,8 @@ For VPS / VM hosting (DigitalOcean Droplet, AWS EC2, or Azure VM):
 
 ```bash
 # 1. Clone repository on server
-git clone -b main https://github.com/Sumanth071/Nazma_Team_PRo.git
-cd Nazma_Team_PRo
+git clone -b main https://github.com/Sumanth071/ColoAI-Polyp.git
+cd ColoAI-Polyp
 
 # 2. Build and launch all services in detached mode
 docker-compose up -d --build

@@ -4,7 +4,7 @@
 **System Brand:** **PolypAI** (*Precision Endoscopy AI Decision-Support Platform*)  
 **Client Organization / Evaluation Board:** Client Review Panel & Technical Stakeholders  
 **Submission Date:** September 19, 2026  
-**Repository:** [https://github.com/Sumanth071/Nazma_Team_PRo](https://github.com/Sumanth071/Nazma_Team_PRo)  
+**Repository:** [https://github.com/Sumanth071/ColoAI-Polyp](https://github.com/Sumanth071/ColoAI-Polyp)  
 **Database Cluster:** MongoDB Atlas Cloud Cluster (`coloai_prod`)  
 
 ---

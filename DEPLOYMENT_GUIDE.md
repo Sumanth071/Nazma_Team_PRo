@@ -11,7 +11,7 @@ This guide walks you through deploying your fullstack application to the cloud u
 ## 📋 Prerequisites Checklist
 
 1. A **[GitHub](https://github.com)** account containing your repository:
-   - Repo URL: `https://github.com/Sumanth071/Nazma_Team_PRo`
+   - Repo URL: `https://github.com/Sumanth071/ColoAI-Polyp`
 2. A free account on **[Render.com](https://render.com)**
 3. A free account on **[Vercel.com](https://vercel.com)**
 4. **MongoDB Atlas Network Access**:
@@ -41,7 +41,7 @@ Render will host your Express API server and connect to MongoDB Atlas.
 ### Option A: 1-Click Blueprint Deployment (Recommended)
 1. Go to your **[Render Dashboard](https://dashboard.render.com)**.
 2. Click **New +** (top right) ➜ Select **Blueprint**.
-3. Connect your GitHub repository: `Sumanth071/Nazma_Team_PRo`.
+3. Connect your GitHub repository: `Sumanth071/ColoAI-Polyp`.
 4. Render will automatically detect the `render.yaml` file in your repository!
 5. Click **Apply**. Render will automatically provision the `coloai-backend` service.
 
@@ -50,7 +50,7 @@ Render will host your Express API server and connect to MongoDB Atlas.
 ### Option B: Manual Web Service Deployment
 If you prefer configuring it manually:
 1. On Render Dashboard, click **New +** ➜ **Web Service**.
-2. Select **Build and deploy from a Git repository** ➜ Connect `Sumanth071/Nazma_Team_PRo`.
+2. Select **Build and deploy from a Git repository** ➜ Connect `Sumanth071/ColoAI-Polyp`.
 3. Fill in the following settings:
    - **Name**: `coloai-backend`
    - **Region**: Oregon (US West) or any nearby region
@@ -99,7 +99,7 @@ Vercel will host your fast React Vite frontend with full PWA and mobile support.
 
 1. Go to your **[Vercel Dashboard](https://vercel.com/dashboard)**.
 2. Click **Add New...** ➜ Select **Project**.
-3. Find and import your repository: `Sumanth071/Nazma_Team_PRo`.
+3. Find and import your repository: `Sumanth071/ColoAI-Polyp`.
 4. In the **Configure Project** screen:
    - **Project Name**: `coloai-polyp` (or your preferred name)
    - **Framework Preset**: `Vite` (automatically detected)
