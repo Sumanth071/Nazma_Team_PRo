@@ -12,18 +12,28 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
+import { GooglePlayIcon } from './GooglePlayBadge';
 
 interface MobileAppDownloadModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialTab?: 'android' | 'qrcode' | 'apk' | 'ios';
 }
 
 export const MobileAppDownloadModal: React.FC<MobileAppDownloadModalProps> = ({
   isOpen,
   onClose,
+  initialTab = 'android',
 }) => {
-  const [activeTab, setActiveTab] = useState<'android' | 'qrcode' | 'apk' | 'ios'>('android');
+  const [activeTab, setActiveTab] = useState<'android' | 'qrcode' | 'apk' | 'ios'>(initialTab);
   const { canInstall, isInstalled, promptInstall } = usePWAInstall();
+
+  // Reset tab to initialTab if prop changes
+  React.useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab, isOpen]);
 
   if (!isOpen) return null;
 
@@ -48,9 +58,11 @@ export const MobileAppDownloadModal: React.FC<MobileAppDownloadModalProps> = ({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-bold text-white">Download ColoAI Mobile App</h2>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
-                PWA & APK READY
+              <h2 className="text-base sm:text-lg font-bold text-white">
+                Colorectal Polyp Cancer Classification App
+              </h2>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold shrink-0">
+                PWA & PLAY READY
               </span>
             </div>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -191,13 +203,30 @@ export const MobileAppDownloadModal: React.FC<MobileAppDownloadModalProps> = ({
         {/* Tab 3: Play Store & Standalone APK */}
         {activeTab === 'apk' && (
           <div className="space-y-4 animate-in fade-in duration-150">
-            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3 text-xs">
+            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3.5 text-xs">
+              <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-black border border-slate-800">
+                <div className="flex items-center gap-3">
+                  <GooglePlayIcon className="w-7 h-7 shrink-0" />
+                  <div className="text-left leading-none">
+                    <span className="block text-[9px] uppercase tracking-wider text-slate-400 font-semibold">
+                      AVAILABLE VIA
+                    </span>
+                    <span className="block text-sm font-black text-white tracking-tight mt-1">
+                      Google Play Store & Android APK
+                    </span>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold">
+                  Verified TWA
+                </span>
+              </div>
+
               <div className="flex items-start gap-2.5">
                 <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
                 <div className="space-y-1 text-slate-300">
                   <h4 className="font-bold text-white text-sm">Google Play Store & Standalone APK Package</h4>
                   <p className="text-slate-400 leading-relaxed">
-                    ColoAI is 100% compliant with Google's Trusted Web Activity (TWA) and Microsoft PWABuilder specifications for Google Play Store packaging.
+                    Colorectal Polyp Cancer Classification is 100% compliant with Google's Trusted Web Activity (TWA) and Microsoft PWABuilder specifications for Google Play Store packaging.
                   </p>
                 </div>
               </div>

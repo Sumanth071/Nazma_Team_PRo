@@ -9,6 +9,8 @@ import {
   X,
   CheckCircle2,
   UserCheck,
+  RotateCcw,
+  SlidersHorizontal,
 } from 'lucide-react';
 
 export const UserManagement: React.FC = () => {
@@ -184,16 +186,25 @@ export const UserManagement: React.FC = () => {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search users..."
-              className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
+              placeholder="Search users by name or email..."
+              className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 transition-all"
             />
+            {search && (
+              <button
+                type="button"
+                onClick={() => setSearch('')}
+                className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
 
-          <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="flex items-center gap-2.5 w-full sm:w-auto">
             <select
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value)}
-              className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-200 focus:outline-none focus:border-blue-500"
+              className="px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:border-blue-500 cursor-pointer"
             >
               <option value="">All Roles</option>
               <option value="Admin">Administrator</option>
@@ -204,7 +215,7 @@ export const UserManagement: React.FC = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-200 focus:outline-none focus:border-blue-500"
+              className="px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:border-blue-500 cursor-pointer"
             >
               <option value="">All Statuses</option>
               <option value="active">Active</option>
@@ -212,6 +223,54 @@ export const UserManagement: React.FC = () => {
             </select>
           </div>
         </div>
+
+        {/* Active Filters Pill Bar */}
+        {(search || roleFilter || statusFilter) && (
+          <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+            <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase flex items-center gap-1">
+              <SlidersHorizontal className="w-3 h-3" />
+              Active:
+            </span>
+
+            {search && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-[11px] font-medium">
+                Keyword: "{search}"
+                <X className="w-3 h-3 cursor-pointer hover:opacity-75" onClick={() => setSearch('')} />
+              </span>
+            )}
+
+            {roleFilter && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-[11px] font-medium">
+                Role: {roleFilter}
+                <X className="w-3 h-3 cursor-pointer hover:opacity-75" onClick={() => setRoleFilter('')} />
+              </span>
+            )}
+
+            {statusFilter && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-[11px] font-medium">
+                Status: {statusFilter}
+                <X className="w-3 h-3 cursor-pointer hover:opacity-75" onClick={() => setStatusFilter('')} />
+              </span>
+            )}
+
+            <button
+              type="button"
+              onClick={() => {
+                setSearch('');
+                setRoleFilter('');
+                setStatusFilter('');
+              }}
+              className="text-[11px] font-semibold text-rose-600 dark:text-rose-400 hover:underline cursor-pointer flex items-center gap-1 ml-1"
+            >
+              <RotateCcw className="w-3 h-3" />
+              Reset All
+            </button>
+
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 ml-auto">
+              Found {users.length} user{users.length === 1 ? '' : 's'}
+            </span>
+          </div>
+        )}
 
         {/* Table */}
         <div className="overflow-x-auto">

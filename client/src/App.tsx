@@ -59,7 +59,10 @@ export const App: React.FC = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/analyze" element={<NewAnalysis />} />
             <Route path="/prediction/:id" element={<PredictionResult />} />
+            <Route path="/explanation" element={<Explainability />} />
             <Route path="/explanation/:id" element={<Explainability />} />
+            <Route path="/explainability" element={<Explainability />} />
+            <Route path="/explainability/:id" element={<Explainability />} />
             <Route path="/analysis/:id" element={<PredictionDetails />} />
             <Route path="/cases" element={<CaseManagement />} />
             <Route path="/history" element={<PredictionHistory />} />

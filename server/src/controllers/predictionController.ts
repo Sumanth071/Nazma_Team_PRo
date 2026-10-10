@@ -112,6 +112,8 @@ export const getPredictions = async (req: AuthRequest, res: Response): Promise<v
       reviewStatus,
       minConfidence,
       modelVersion,
+      startDate,
+      endDate,
       scope,
     } = req.query;
 
@@ -124,7 +126,12 @@ export const getPredictions = async (req: AuthRequest, res: Response): Promise<v
     }
 
     if (search) {
-      query.analysisId = { $regex: search, $options: 'i' };
+      const searchRegex = { $regex: String(search).trim(), $options: 'i' };
+      query.$or = [
+        { analysisId: searchRegex },
+        { predictedClass: searchRegex },
+        { reviewNotes: searchRegex },
+      ];
     }
     if (predictedClass) {
       query.predictedClass = predictedClass;
@@ -134,6 +141,18 @@ export const getPredictions = async (req: AuthRequest, res: Response): Promise<v
     }
     if (minConfidence) {
       query.confidence = { $gte: parseFloat(minConfidence as string) };
+    }
+
+    if (startDate || endDate) {
+      query.createdAt = {};
+      if (startDate) {
+        query.createdAt.$gte = new Date(startDate as string);
+      }
+      if (endDate) {
+        const end = new Date(endDate as string);
+        end.setHours(23, 59, 59, 999);
+        query.createdAt.$lte = end;
+      }
     }
 
     const skip = (Number(page) - 1) * Number(limit);

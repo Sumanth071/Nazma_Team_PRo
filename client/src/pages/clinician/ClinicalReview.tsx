@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import api from '../../api/client';
 import { Badge } from '../../components/Badge';
+import { VoiceExplanationWidget } from '../../components/VoiceExplanationWidget';
 import {
   Save,
   Check,
@@ -120,6 +121,15 @@ export const ClinicalReview: React.FC = () => {
           <FileCheck className="w-4 h-4" />
           <span>{successMessage}</span>
         </div>
+      )}
+
+      {/* Multilingual Voice Assistant (English, Hindi, Telugu, Tamil) */}
+      {selectedPrediction && (
+        <VoiceExplanationWidget
+          predictedClass={selectedPrediction.predictedClass}
+          confidence={selectedPrediction.confidence}
+          analysisId={selectedPrediction.analysisId}
+        />
       )}
 
       {/* Main Review Card */}

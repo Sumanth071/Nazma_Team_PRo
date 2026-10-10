@@ -43,16 +43,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const res = await api.post('/auth/login', { email, password });
     const { token: newToken, user: newUser } = res.data;
     localStorage.setItem('coloai_token', newToken);
+    localStorage.setItem('coloai_user', JSON.stringify(newUser));
     setToken(newToken);
     setUser(newUser);
+    return newUser;
   };
 
   const register = async (name: string, email: string, password: string, requestedRole?: string) => {
     const res = await api.post('/auth/register', { name, email, password, requestedRole });
     const { token: newToken, user: newUser } = res.data;
     localStorage.setItem('coloai_token', newToken);
+    localStorage.setItem('coloai_user', JSON.stringify(newUser));
     setToken(newToken);
     setUser(newUser);
+    return newUser;
   };
 
   const quickDemoLogin = async (role: UserRole) => {

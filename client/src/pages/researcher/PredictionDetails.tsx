@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../../api/client';
 import { Badge } from '../../components/Badge';
 import { ProbabilityBar } from '../../components/ProbabilityBar';
+import { VoiceExplanationWidget } from '../../components/VoiceExplanationWidget';
 import {
   ArrowLeft,
   Eye,
@@ -74,6 +75,13 @@ export const PredictionDetails: React.FC = () => {
         </Link>
         <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Analysis Details</h1>
       </div>
+
+      {/* Multilingual Voice Assistant (English, Hindi, Telugu, Tamil) */}
+      <VoiceExplanationWidget
+        predictedClass={prediction.predictedClass}
+        confidence={prediction.confidence}
+        analysisId={prediction.analysisId}
+      />
 
       {/* Main 2-Column Split matching Screen 8 */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

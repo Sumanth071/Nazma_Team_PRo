@@ -5,21 +5,44 @@ import { logAudit } from '../middleware/auditLogger';
 
 export const getCases = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const { search, status, riskLevel } = req.query;
+    const { search, status, riskLevel, startDate, endDate } = req.query;
     const query: any = {};
 
     if (search) {
+      const s = { $regex: String(search).trim(), $options: 'i' };
       query.$or = [
-        { caseId: { $regex: search, $options: 'i' } },
-        { patientName: { $regex: search, $options: 'i' } },
-        { endoscopist: { $regex: search, $options: 'i' } },
-        { anatomicalLocation: { $regex: search, $options: 'i' } },
+        { caseId: s },
+        { patientName: s },
+        { endoscopist: s },
+        { anatomicalLocation: s },
+        { polypFindings: s },
+        { indication: s },
       ];
     }
     if (status) query.status = status;
     if (riskLevel) query.riskLevel = riskLevel;
 
-    const cases = await PatientCase.find(query).sort({ createdAt: -1 });
+    if (startDate || endDate) {
+      const dateFilter: any = {};
+      if (startDate) {
+        dateFilter.$gte = new Date(startDate as string);
+      }
+      if (endDate) {
+        const end = new Date(endDate as string);
+        end.setHours(23, 59, 59, 999);
+        dateFilter.$lte = end;
+      }
+
+      const dateOr = [{ procedureDate: dateFilter }, { createdAt: dateFilter }];
+      if (query.$or) {
+        query.$and = [{ $or: query.$or }, { $or: dateOr }];
+        delete query.$or;
+      } else {
+        query.$or = dateOr;
+      }
+    }
+
+    const cases = await PatientCase.find(query).sort({ procedureDate: -1, createdAt: -1 });
     res.json({ success: true, count: cases.length, cases });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });

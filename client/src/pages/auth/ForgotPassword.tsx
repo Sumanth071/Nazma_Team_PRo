@@ -44,7 +44,7 @@ export const ForgotPassword: React.FC = () => {
 
       <div className="w-full max-w-md space-y-5 sm:space-y-6 relative z-10">
         <div className="text-center space-y-2 flex flex-col items-center">
-          <BrandLogo size="md" subtitle="" textClassName="text-slate-900 dark:text-white" />
+          <BrandLogo size="md" subtitle="Cancer Classification" textClassName="text-slate-900 dark:text-white" />
           <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white mt-2">Reset Password</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400">Enter your email to receive recovery instructions</p>
         </div>

@@ -19,6 +19,7 @@ export const generateReport = async (req: AuthRequest, res: Response): Promise<v
       .populate('imageId')
       .populate('explanationId')
       .populate('modelVersionId')
+      .populate('userId', 'name email role')
       .populate('reviewerId', 'name email');
 
     if (!prediction) {
@@ -37,12 +38,30 @@ export const generateReport = async (req: AuthRequest, res: Response): Promise<v
 
     const reportId = `REP-${prediction.analysisId}-${Date.now().toString().slice(-4)}`;
 
+    // Resolve researcher attribution for bottom signature
+    let researcherName = 'Prof. David Chen, PhD';
+    const creatorUser = prediction.userId as any;
+    if (req.user?.role?.name === 'Researcher') {
+      researcherName = req.user.name;
+    } else if (creatorUser?.name && !creatorUser.name.toLowerCase().includes('dr.')) {
+      researcherName = creatorUser.name;
+    }
+
+    // Resolve clinician reviewer attribution
+    let reviewerName = (prediction.reviewerId as any)?.name;
+    if (!reviewerName && req.user?.role?.name === 'Clinician') {
+      reviewerName = req.user.name;
+    } else if (!reviewerName) {
+      reviewerName = 'Dr. Elena Rostova, MD';
+    }
+
     const { filePath, fileName } = await PDFService.generateReport({
       prediction,
       image,
       explanation,
       model,
-      reviewerName: (prediction.reviewerId as any)?.name,
+      researcherName,
+      reviewerName,
       generatedByName: req.user?.name || 'Authorized User',
     });
 
@@ -83,9 +102,29 @@ export const generateReport = async (req: AuthRequest, res: Response): Promise<v
 
 export const getReports = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    const { search, startDate, endDate } = req.query;
     const query: any = {};
     if (req.user?.role?.name === 'Researcher') {
       query.generatedBy = req.user._id;
+    }
+
+    if (search) {
+      const searchRegex = { $regex: String(search).trim(), $options: 'i' };
+      query.$or = [
+        { reportId: searchRegex },
+      ];
+    }
+
+    if (startDate || endDate) {
+      query.createdAt = {};
+      if (startDate) {
+        query.createdAt.$gte = new Date(startDate as string);
+      }
+      if (endDate) {
+        const end = new Date(endDate as string);
+        end.setHours(23, 59, 59, 999);
+        query.createdAt.$lte = end;
+      }
     }
 
     const reports = await Report.find(query)

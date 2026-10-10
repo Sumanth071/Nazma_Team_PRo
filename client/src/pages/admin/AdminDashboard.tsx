@@ -28,17 +28,30 @@ export const AdminDashboard: React.FC = () => {
     fetchStats();
   }, []);
 
-  const totalUsers = stats?.totalUsers || 24;
-  const totalAnalyses = stats?.totalPredictions || 1248;
-  const activeModel = stats?.activeModel?.version || 'v1.2.0';
-  const datasetsCount = stats?.totalDatasets || 5;
+  const totalUsers = stats?.totalUsers ?? 5;
+  const totalAnalyses = stats?.totalPredictions ?? 1248;
+  const activeModel = stats?.activeModel?.version || 'v1.0.0-prod';
+  const datasetsCount = stats?.totalDatasets ?? 1;
 
-  const distributionData = [
-    { name: 'Adenomatous', value: 52, color: '#2563eb' },
-    { name: 'Hyperplastic', value: 28, color: '#f97316' },
-    { name: 'Serrated', value: 14, color: '#10b981' },
-    { name: 'Other', value: 6, color: '#8b5cf6' },
-  ];
+  const distributionData = React.useMemo(() => {
+    if (stats?.classDistribution && stats.classDistribution.length > 0) {
+      const hasAny = stats.classDistribution.some((c: any) => c.count > 0 || c.value > 0);
+      if (hasAny) {
+        return stats.classDistribution.map((c: any) => ({
+          name: c.name || c.className?.replace(' Polyp', '') || 'Other',
+          value: c.percentage != null ? c.percentage : c.value,
+          count: c.count,
+          color: c.color || '#2563eb',
+        }));
+      }
+    }
+    return [
+      { name: 'Adenomatous', value: 52, color: '#2563eb' },
+      { name: 'Hyperplastic', value: 28, color: '#f97316' },
+      { name: 'Serrated', value: 14, color: '#10b981' },
+      { name: 'Other', value: 6, color: '#8b5cf6' },
+    ];
+  }, [stats]);
 
   const recentActivity = [
     {
@@ -126,7 +139,7 @@ export const AdminDashboard: React.FC = () => {
                       paddingAngle={3}
                       dataKey="value"
                     >
-                      {distributionData.map((entry, index) => (
+                      {distributionData.map((entry: any, index: number) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
@@ -145,7 +158,7 @@ export const AdminDashboard: React.FC = () => {
 
               {/* Donut Legend matching Screen 11 */}
               <div className="space-y-2.5 text-xs">
-                {distributionData.map((d) => (
+                {distributionData.map((d: any) => (
                   <div key={d.name} className="flex items-center justify-between gap-6">
                     <div className="flex items-center gap-2">
                       <span

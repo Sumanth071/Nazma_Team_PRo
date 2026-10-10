@@ -19,6 +19,7 @@ import {
   FolderKanban,
   Stethoscope,
   Activity,
+  Sparkles,
   X,
 } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
@@ -65,7 +66,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, onClose })
         <div className="space-y-6 overflow-y-auto">
           {/* Brand Header */}
           <div className="flex items-center justify-between px-1 py-1">
-            <BrandLogo size="sm" subtitle="Precision Endoscopy AI" />
+            <BrandLogo size="sm" subtitle="Cancer Classification" textClassName="text-white" subtitleClassName="text-cyan-400" />
 
             {/* Close button on mobile */}
             <button
@@ -147,6 +148,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, onClose })
                   <UploadCloud className="w-4 h-4" />
                   <span>New Analysis</span>
                 </NavLink>
+                <NavLink to="/explanation" className={linkClass} onClick={handleLinkClick}>
+                  <Sparkles className="w-4 h-4 text-purple-400" />
+                  <span>AI Explainer</span>
+                </NavLink>
                 <NavLink to="/history" className={linkClass} onClick={handleLinkClick}>
                   <History className="w-4 h-4" />
                   <span>History</span>
@@ -176,6 +181,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, onClose })
                 <NavLink to="/analyze" className={linkClass} onClick={handleLinkClick}>
                   <UploadCloud className="w-4 h-4" />
                   <span>New Analysis</span>
+                </NavLink>
+                <NavLink to="/explanation" className={linkClass} onClick={handleLinkClick}>
+                  <Sparkles className="w-4 h-4 text-purple-400" />
+                  <span>AI Explainer</span>
                 </NavLink>
                 <NavLink to="/history" className={linkClass} onClick={handleLinkClick}>
                   <History className="w-4 h-4" />

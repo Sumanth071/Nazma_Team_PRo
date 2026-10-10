@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import api from '../../api/client';
 import { Badge } from '../../components/Badge';
+import { DateRangePicker, DateRange } from '../../components/DateRangePicker';
 import {
   Download,
   Eye,
@@ -8,6 +9,10 @@ import {
   Printer,
   ChevronLeft,
   ChevronRight,
+  Search,
+  X,
+  RotateCcw,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { ReportItem } from '../../types';
 import { getReportDownloadUrl } from '../../utils/apiConfig';
@@ -15,13 +20,25 @@ import { getReportDownloadUrl } from '../../utils/apiConfig';
 export const Reports: React.FC = () => {
   const [reports, setReports] = useState<ReportItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [classFilter, setClassFilter] = useState('');
+  const [dateRange, setDateRange] = useState<DateRange>({
+    startDate: '',
+    endDate: '',
+    label: 'All Time',
+  });
   const [page, setPage] = useState(1);
   const [actionMessage, setActionMessage] = useState('');
 
   const fetchReports = async () => {
     setLoading(true);
     try {
-      const res = await api.get('/reports');
+      const params: any = {};
+      if (search) params.search = search;
+      if (dateRange.startDate) params.startDate = dateRange.startDate;
+      if (dateRange.endDate) params.endDate = dateRange.endDate;
+
+      const res = await api.get('/reports', { params });
       setReports(res.data.reports || []);
     } catch (err) {
       console.error('Failed to load reports:', err);
@@ -32,7 +49,21 @@ export const Reports: React.FC = () => {
 
   useEffect(() => {
     fetchReports();
-  }, []);
+  }, [dateRange]);
+
+  const handleResetFilters = () => {
+    setSearch('');
+    setClassFilter('');
+    setDateRange({ startDate: '', endDate: '', label: 'All Time' });
+    setPage(1);
+  };
+
+  const hasActiveFilters = Boolean(
+    search ||
+    classFilter ||
+    dateRange.startDate ||
+    dateRange.endDate
+  );
 
   const handleOpenReport = async (report: any) => {
     const token = localStorage.getItem('coloai_token') || '';
@@ -142,11 +173,58 @@ export const Reports: React.FC = () => {
       })
     : defaultMockReports;
 
+  const filteredReports = useMemo(() => {
+    return displayedReports.filter((r: any) => {
+      const q = search.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        r.id.toLowerCase().includes(q) ||
+        r.analysisId.toLowerCase().includes(q) ||
+        r.title.toLowerCase().includes(q) ||
+        r.physician.toLowerCase().includes(q) ||
+        r.prediction.toLowerCase().includes(q);
+
+      const matchesClass =
+        !classFilter ||
+        r.prediction.toLowerCase().includes(classFilter.toLowerCase());
+
+      let matchesDate = true;
+      if (dateRange.startDate || dateRange.endDate) {
+        const itemDate = new Date(r.date).getTime();
+        if (dateRange.startDate) {
+          const s = new Date(dateRange.startDate).getTime();
+          if (itemDate < s) matchesDate = false;
+        }
+        if (dateRange.endDate) {
+          const e = new Date(dateRange.endDate);
+          e.setHours(23, 59, 59, 999);
+          if (itemDate > e.getTime()) matchesDate = false;
+        }
+      }
+
+      return matchesSearch && matchesClass && matchesDate;
+    });
+  }, [displayedReports, search, classFilter, dateRange]);
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Reports</h1>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Download analysis summaries and clinical reports</p>
+      {/* Top Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Diagnostic Reports</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Search, filter by date range, and download validated clinical decision summaries</p>
+        </div>
+
+        {hasActiveFilters && (
+          <button
+            type="button"
+            onClick={handleResetFilters}
+            className="self-start sm:self-auto px-3 py-1.5 rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 text-xs font-semibold flex items-center gap-1.5 hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-colors cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Reset All Filters</span>
+          </button>
+        )}
       </div>
 
       {actionMessage && (
@@ -155,7 +233,94 @@ export const Reports: React.FC = () => {
         </div>
       )}
 
+      {/* Main Table Card */}
       <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden p-6 space-y-5 transition-colors">
+        {/* Search & Filter Bar */}
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+          {/* Search Field */}
+          <div className="relative flex-1 max-w-md">
+            <Search className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3 top-2.5" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search reports by ID, case, doctor, or protocol..."
+              className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 transition-all"
+            />
+            {search && (
+              <button
+                type="button"
+                onClick={() => setSearch('')}
+                className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+
+          {/* Interactive Filters: Class & Date Range */}
+          <div className="flex flex-wrap items-center gap-2.5">
+            <select
+              value={classFilter}
+              onChange={(e) => setClassFilter(e.target.value)}
+              className="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:border-blue-500 cursor-pointer"
+            >
+              <option value="">All Findings</option>
+              <option value="Adenomatous">Adenomatous</option>
+              <option value="Hyperplastic">Hyperplastic</option>
+              <option value="Serrated">Serrated</option>
+              <option value="Other">Other / Non-polyp</option>
+            </select>
+
+            <DateRangePicker
+              value={dateRange}
+              onChange={(newRange) => {
+                setDateRange(newRange);
+                setPage(1);
+              }}
+              placeholder="Date Range"
+            />
+          </div>
+        </div>
+
+        {/* Active Filters Pill Bar */}
+        {hasActiveFilters && (
+          <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+            <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase flex items-center gap-1">
+              <SlidersHorizontal className="w-3 h-3" />
+              Active:
+            </span>
+
+            {search && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-[11px] font-medium">
+                Keyword: "{search}"
+                <X className="w-3 h-3 cursor-pointer hover:opacity-75" onClick={() => setSearch('')} />
+              </span>
+            )}
+
+            {classFilter && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-[11px] font-medium">
+                Finding: {classFilter}
+                <X className="w-3 h-3 cursor-pointer hover:opacity-75" onClick={() => setClassFilter('')} />
+              </span>
+            )}
+
+            {(dateRange.startDate || dateRange.endDate) && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-[11px] font-medium">
+                Date: {dateRange.label}
+                <X
+                  className="w-3 h-3 cursor-pointer hover:opacity-75"
+                  onClick={() => setDateRange({ startDate: '', endDate: '', label: 'All Time' })}
+                />
+              </span>
+            )}
+
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 ml-auto">
+              Found {filteredReports.length} report{filteredReports.length === 1 ? '' : 's'}
+            </span>
+          </div>
+        )}
+
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
@@ -170,7 +335,14 @@ export const Reports: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {displayedReports.map((r, idx) => (
+              {filteredReports.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-6 text-center text-slate-400">
+                    No reports match your search or filter criteria.
+                  </td>
+                </tr>
+              ) : (
+                filteredReports.map((r, idx) => (
                 <tr key={r.id || idx} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
                   <td className="py-3.5 pl-2 font-mono font-bold text-blue-600 dark:text-blue-400 text-[11px]">{r.id}</td>
                   <td className="py-3.5 font-mono text-slate-700 dark:text-slate-300 font-semibold text-[11px]">#{r.analysisId}</td>
@@ -220,39 +392,34 @@ export const Reports: React.FC = () => {
                     </div>
                   </td>
                 </tr>
-              ))}
+              )))}
             </tbody>
           </table>
         </div>
 
-        {/* Pagination matching Screen 10 */}
+        {/* Dynamic Pagination */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
-          <div>Showing 1-5 of 32</div>
+          <div>
+            Showing 1-{Math.min(filteredReports.length, 10)} of {filteredReports.length} report{filteredReports.length === 1 ? '' : 's'}
+          </div>
 
           <div className="flex items-center gap-1">
             <button
               type="button"
+              disabled={page <= 1}
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
               className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 disabled:opacity-40"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
             </button>
-            {[1, 2, 3, 4, 5].map((pageNum) => (
-              <button
-                key={pageNum}
-                type="button"
-                onClick={() => setPage(pageNum)}
-                className={`w-7 h-7 rounded-lg text-xs font-semibold transition-colors ${
-                  page === pageNum
-                    ? 'bg-blue-600 text-white shadow-xs'
-                    : 'border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
-                }`}
-              >
-                {pageNum}
-              </button>
-            ))}
+            <span className="px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
+              Page {page} of {Math.max(1, Math.ceil(filteredReports.length / 10))}
+            </span>
             <button
               type="button"
-              className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300"
+              disabled={page >= Math.ceil(filteredReports.length / 10)}
+              onClick={() => setPage((p) => p + 1)}
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 disabled:opacity-40"
             >
               <ChevronRight className="w-3.5 h-3.5" />
             </button>

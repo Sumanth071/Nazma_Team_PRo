@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../api/client';
 import { Badge } from '../../components/Badge';
+import { DateRangePicker, DateRange } from '../../components/DateRangePicker';
 import {
   FolderKanban,
   Plus,
@@ -15,6 +16,8 @@ import {
   X,
   ArrowRight,
   UploadCloud,
+  RotateCcw,
+  SlidersHorizontal,
 } from 'lucide-react';
 
 interface PatientCaseItem {
@@ -40,6 +43,11 @@ export const CaseManagement: React.FC = () => {
   const [search, setSearch] = useState('');
   const [riskFilter, setRiskFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [dateRange, setDateRange] = useState<DateRange>({
+    startDate: '',
+    endDate: '',
+    label: 'All Time',
+  });
 
   // Modals
   const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -71,6 +79,8 @@ export const CaseManagement: React.FC = () => {
       if (search) params.search = search;
       if (riskFilter) params.riskLevel = riskFilter;
       if (statusFilter) params.status = statusFilter;
+      if (dateRange.startDate) params.startDate = dateRange.startDate;
+      if (dateRange.endDate) params.endDate = dateRange.endDate;
 
       const res = await api.get('/cases', { params });
       setCases(res.data.cases || []);
@@ -83,7 +93,22 @@ export const CaseManagement: React.FC = () => {
 
   useEffect(() => {
     fetchCases();
-  }, [search, riskFilter, statusFilter]);
+  }, [search, riskFilter, statusFilter, dateRange]);
+
+  const handleResetFilters = () => {
+    setSearch('');
+    setRiskFilter('');
+    setStatusFilter('');
+    setDateRange({ startDate: '', endDate: '', label: 'All Time' });
+  };
+
+  const hasActiveFilters = Boolean(
+    search ||
+    riskFilter ||
+    statusFilter ||
+    dateRange.startDate ||
+    dateRange.endDate
+  );
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -255,23 +280,32 @@ export const CaseManagement: React.FC = () => {
       {/* Main Table Card */}
       <div className="bg-white dark:bg-[#0d1838] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs p-6 space-y-5 transition-colors">
         {/* Search & Filter Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="relative w-full sm:w-80">
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+          <div className="relative flex-1 max-w-md">
             <Search className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3 top-2.5" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search cases..."
-              className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
+              placeholder="Search by case ID, patient, endoscopist, or findings..."
+              className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-blue-500 transition-all"
             />
+            {search && (
+              <button
+                type="button"
+                onClick={() => setSearch('')}
+                className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
 
-          <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full sm:w-auto">
+          <div className="flex flex-wrap items-center gap-2.5">
             <select
               value={riskFilter}
               onChange={(e) => setRiskFilter(e.target.value)}
-              className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-200 focus:outline-none focus:border-blue-500"
+              className="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:border-blue-500 cursor-pointer"
             >
               <option value="">All Risk Levels</option>
               <option value="High">High Risk</option>
@@ -282,7 +316,7 @@ export const CaseManagement: React.FC = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-200 focus:outline-none focus:border-blue-500"
+              className="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:border-blue-500 cursor-pointer"
             >
               <option value="">All Case Statuses</option>
               <option value="Scheduled">Scheduled</option>
@@ -290,8 +324,68 @@ export const CaseManagement: React.FC = () => {
               <option value="Reviewed">Reviewed</option>
               <option value="Follow-up Required">Follow-up Required</option>
             </select>
+
+            <DateRangePicker
+              value={dateRange}
+              onChange={(newRange) => setDateRange(newRange)}
+              placeholder="Procedure Date"
+            />
           </div>
         </div>
+
+        {/* Active Filters Pill Bar */}
+        {hasActiveFilters && (
+          <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+            <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase flex items-center gap-1">
+              <SlidersHorizontal className="w-3 h-3" />
+              Active:
+            </span>
+
+            {search && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-[11px] font-medium">
+                Keyword: "{search}"
+                <X className="w-3 h-3 cursor-pointer hover:opacity-75" onClick={() => setSearch('')} />
+              </span>
+            )}
+
+            {riskFilter && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-[11px] font-medium">
+                Risk: {riskFilter}
+                <X className="w-3 h-3 cursor-pointer hover:opacity-75" onClick={() => setRiskFilter('')} />
+              </span>
+            )}
+
+            {statusFilter && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 text-[11px] font-medium">
+                Status: {statusFilter}
+                <X className="w-3 h-3 cursor-pointer hover:opacity-75" onClick={() => setStatusFilter('')} />
+              </span>
+            )}
+
+            {(dateRange.startDate || dateRange.endDate) && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-[11px] font-medium">
+                Date: {dateRange.label}
+                <X
+                  className="w-3 h-3 cursor-pointer hover:opacity-75"
+                  onClick={() => setDateRange({ startDate: '', endDate: '', label: 'All Time' })}
+                />
+              </span>
+            )}
+
+            <button
+              type="button"
+              onClick={handleResetFilters}
+              className="text-[11px] font-semibold text-rose-600 dark:text-rose-400 hover:underline cursor-pointer flex items-center gap-1 ml-1"
+            >
+              <RotateCcw className="w-3 h-3" />
+              Reset All
+            </button>
+
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 ml-auto">
+              Found {cases.length} case{cases.length === 1 ? '' : 's'}
+            </span>
+          </div>
+        )}
 
         {/* Table */}
         <div className="overflow-x-auto">

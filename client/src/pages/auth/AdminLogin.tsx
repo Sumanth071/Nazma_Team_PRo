@@ -87,8 +87,8 @@ export const AdminLogin: React.FC = () => {
           <div className="space-y-4 sm:space-y-6">
             {/* Header Badge */}
             <div className="flex items-center gap-2.5 sm:gap-3">
-              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-700 flex items-center justify-center text-white font-black shadow-lg shadow-rose-600/30 border border-rose-400/30 shrink-0">
-                <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full p-0.5 bg-gradient-to-tr from-rose-600 via-rose-400 to-indigo-600 shadow-lg shadow-rose-600/30 overflow-hidden shrink-0">
+                <img src="/logo.png" alt="ColoAI Logo" className="w-full h-full object-cover rounded-full bg-slate-950" />
               </div>
               <div>
                 <div className="font-extrabold text-lg sm:text-xl tracking-tight text-white leading-tight">
@@ -264,7 +264,7 @@ export const AdminLogin: React.FC = () => {
                   to="/login"
                   className="text-xs font-bold text-blue-400 hover:underline inline-flex items-center gap-1 py-1"
                 >
-                  Staff Portal →
+                  Main Portal →
                 </Link>
               </div>
             </div>

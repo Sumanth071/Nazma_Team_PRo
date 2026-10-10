@@ -18,6 +18,7 @@ import analyticsRoutes from './routes/analyticsRoutes';
 import auditLogRoutes from './routes/auditLogRoutes';
 import caseRoutes from './routes/caseRoutes';
 import imageRoutes from './routes/imageRoutes';
+import ttsRoutes from './routes/ttsRoutes';
 import { authenticateJWT } from './middleware/authMiddleware';
 import { predictExistingImage } from './controllers/predictionController';
 
@@ -78,6 +79,7 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/audit-logs', auditLogRoutes);
 app.use('/api/cases', caseRoutes);
 app.use('/api/images', imageRoutes);
+app.use('/api/tts', ttsRoutes);
 app.post('/api/predict', authenticateJWT, predictExistingImage);
 
 // Global Error Handler

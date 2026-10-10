@@ -14,9 +14,6 @@ import {
   Menu,
 } from 'lucide-react';
 import { UserRole } from '../types';
-import { InstallPWAButton } from './InstallPWAButton';
-import { MobileAppDownloadModal } from './MobileAppDownloadModal';
-import { Smartphone } from 'lucide-react';
 
 interface NavbarProps {
   onToggleMobileSidebar?: () => void;
@@ -26,7 +23,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileSidebar }) => {
   const { user, logout, quickDemoLogin } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
-  const [downloadModalOpen, setDownloadModalOpen] = useState(false);
 
   const handleRoleSwitch = async (targetRole: UserRole) => {
     setRoleDropdownOpen(false);
@@ -47,31 +43,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileSidebar }) => {
         </button>
 
         <div className="flex items-center gap-2">
+          <img src="/logo.png" alt="Logo" className="w-7 h-7 rounded-full object-cover sm:hidden shadow-xs" />
           <span className="hidden sm:inline-block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
             Clinical Decision Support System • AI Diagnostic Platform
           </span>
           <span className="sm:hidden text-xs font-bold text-slate-800 dark:text-white">
-            Polyp<span className="text-emerald-500">AI</span>
+            Polyp<span className="text-cyan-500">AI</span>
           </span>
         </div>
       </div>
 
       <div className="flex items-center gap-1.5 sm:gap-3">
-        {/* Mobile App Download / PWA Modal Trigger */}
-        <button
-          type="button"
-          onClick={() => setDownloadModalOpen(true)}
-          title="Download ColoAI Mobile App for Android & iOS"
-          aria-label="Download Mobile App"
-          className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 border border-emerald-500/40 text-emerald-600 dark:text-emerald-300 font-semibold text-xs transition-all shadow-xs active:scale-95 cursor-pointer"
-        >
-          <Smartphone className="w-3.5 h-3.5 text-emerald-500" />
-          <span className="hidden sm:inline">Mobile App</span>
-        </button>
-
-        {/* PWA Install Button */}
-        <InstallPWAButton variant="navbar" />
-
         {/* Light / Dark Mode Toggle Button */}
         <button
           type="button"
@@ -158,12 +140,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileSidebar }) => {
           <LogOut className="w-4 h-4" />
         </button>
       </div>
-
-      {/* Mobile App Download Modal */}
-      <MobileAppDownloadModal
-        isOpen={downloadModalOpen}
-        onClose={() => setDownloadModalOpen(false)}
-      />
     </header>
   );
 };
