@@ -5,6 +5,18 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/api/:match*",
+      "destination": "https://coloai-backend.onrender.com/api/:match*"
+    },
+    {
+      "source": "/uploads/:match*",
+      "destination": "https://coloai-backend.onrender.com/uploads/:match*"
+    },
+    {
+      "source": "/reports/:match*",
+      "destination": "https://coloai-backend.onrender.com/reports/:match*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

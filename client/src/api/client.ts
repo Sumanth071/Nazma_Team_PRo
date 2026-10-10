@@ -16,7 +16,16 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    // If Vercel returns 405 (static rewrite collision), transparently retry directly against Render backend
+    if (error.response?.status === 405 && error.config && !error.config._retry) {
+      error.config._retry = true;
+      const cleanPath = (error.config.url || '').startsWith('/') ? error.config.url : `/${error.config.url}`;
+      error.config.baseURL = 'https://coloai-backend.onrender.com/api';
+      error.config.url = cleanPath;
+      return axios(error.config);
+    }
+
     if (error.response?.status === 401) {
       localStorage.removeItem('coloai_token');
       localStorage.removeItem('coloai_user');
