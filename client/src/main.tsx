@@ -12,9 +12,15 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 // Register PWA Service Worker for standalone app capabilities
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch((err) => {
-      console.warn('ColoAI Service Worker registration:', err);
-    });
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((reg) => {
+        // Check for updates to bypass stale cached service workers
+        reg.update();
+      })
+      .catch((err) => {
+        console.warn('ColoAI Service Worker registration:', err);
+      });
   });
 }
 

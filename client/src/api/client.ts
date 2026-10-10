@@ -7,6 +7,13 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
+  // If running on Vercel, ensure requests go directly to Render backend
+  if (typeof window !== 'undefined' && (window.location.hostname.includes('vercel.app') || window.location.hostname.includes('vercel'))) {
+    if (!config.baseURL || config.baseURL === '/api' || config.baseURL.includes('trycloudflare.com')) {
+      config.baseURL = 'https://coloai-backend.onrender.com/api';
+    }
+  }
+
   const token = localStorage.getItem('coloai_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -17,8 +24,12 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    // If Vercel returns 405 (static rewrite collision), transparently retry directly against Render backend
-    if (error.response?.status === 405 && error.config && !error.config._retry) {
+    // If Vercel returns 405, 503, or service worker / network failure, transparently retry directly against Render backend
+    const status = error.response?.status;
+    const isOfflineOr503 = status === 503 || error.response?.data?.error?.includes('Offline');
+    const isNetworkError = !error.response && error.message?.includes('Network');
+
+    if ((status === 405 || isOfflineOr503 || isNetworkError) && error.config && !error.config._retry) {
       error.config._retry = true;
       const cleanPath = (error.config.url || '').startsWith('/') ? error.config.url : `/${error.config.url}`;
       error.config.baseURL = 'https://coloai-backend.onrender.com/api';

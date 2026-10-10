@@ -1,5 +1,5 @@
 // ColoAI Diagnostic Platform Service Worker
-const CACHE_NAME = 'coloai-cache-v1';
+const CACHE_NAME = 'coloai-cache-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -11,10 +11,11 @@ const STATIC_ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(STATIC_ASSETS);
-    }).then(() => self.skipWaiting())
+    })
   );
 });
 
@@ -33,25 +34,25 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-
-  // Skip chrome-extension or non-http requests
+  // Skip non-http requests
   if (!event.request.url.startsWith('http')) return;
 
-  // Network-first for API requests
-  if (url.pathname.startsWith('/api')) {
-    event.respondWith(
-      fetch(event.request).catch(() => {
-        return new Response(JSON.stringify({ error: 'Offline - No network connection' }), {
-          headers: { 'Content-Type': 'application/json' },
-          status: 503
-        });
-      })
-    );
-    return;
+  const url = new URL(event.request.url);
+
+  // CRITICAL: NEVER intercept or synthetic-reject API requests, uploads, reports, or backend domains.
+  // Bypass Service Worker completely for all dynamic network and non-GET requests.
+  if (
+    event.request.method !== 'GET' ||
+    url.pathname.startsWith('/api') ||
+    url.pathname.startsWith('/uploads') ||
+    url.pathname.startsWith('/reports') ||
+    url.hostname.includes('onrender.com') ||
+    url.hostname.includes('trycloudflare.com')
+  ) {
+    return; // Direct native browser network passthrough
   }
 
-  // Stale-While-Revalidate for other requests
+  // Stale-While-Revalidate for static GET UI assets only
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       const fetchPromise = fetch(event.request).then((networkResponse) => {
@@ -63,7 +64,7 @@ self.addEventListener('fetch', (event) => {
         }
         return networkResponse;
       }).catch(() => {
-        // Fallback to index.html for navigation requests (SPA support)
+        // Fallback to index.html for SPA navigation requests when truly offline
         if (event.request.mode === 'navigate') {
           return caches.match('/');
         }

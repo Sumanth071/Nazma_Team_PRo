@@ -6,12 +6,21 @@
 
 // Base API URL (automatically points to Render production backend when on Vercel)
 const getBaseApiUrl = (): string => {
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
+  // 1. If running in browser on Vercel or any cloud preview, route directly to Render backend
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (host.includes('vercel.app') || host.includes('vercel')) {
+      return 'https://coloai-backend.onrender.com/api';
+    }
   }
-  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
-    return 'https://coloai-backend.onrender.com/api';
+
+  // 2. Check environment variable, but IGNORE any expired/stale trycloudflare.com tunnel URLs
+  const envUrl = (import.meta.env.VITE_API_URL || '').trim();
+  if (envUrl && !envUrl.includes('trycloudflare.com')) {
+    return envUrl;
   }
+
+  // 3. Default to relative /api for local dev proxy
   return '/api';
 };
 
@@ -20,7 +29,7 @@ export const API_BASE_URL = getBaseApiUrl();
 // Derived root backend URL without trailing "/api"
 export const BACKEND_BASE_URL = API_BASE_URL.startsWith('http')
   ? API_BASE_URL.replace(/\/api\/?$/, '')
-  : (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+  : (typeof window !== 'undefined' && window.location.hostname.includes('vercel')
     ? 'https://coloai-backend.onrender.com'
     : '');
 

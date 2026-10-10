@@ -133,7 +133,7 @@ export const Login: React.FC = () => {
       const user = stored ? JSON.parse(stored) : null;
       routeByRole(user?.role);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Invalid email or password.');
+      setError(err.response?.data?.message || err.response?.data?.error || 'Invalid email or password.');
     } finally {
       setLoading(false);
     }
@@ -147,7 +147,7 @@ export const Login: React.FC = () => {
       await quickDemoLogin(role);
       routeByRole(role);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to authenticate demo account.');
+      setError(err.response?.data?.message || err.response?.data?.error || 'Failed to authenticate demo account.');
     } finally {
       setLoading(false);
       setActiveDemoRole(null);
